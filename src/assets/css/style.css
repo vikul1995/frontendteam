@@ -1,0 +1,303 @@
+/*================================================================================
+	Item Name: Vuexy - Vuejs, HTML & Laravel Admin Dashboard Template
+	Version: 2.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+
+
+.central-meta {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ede9e9;
+    border-radius: 3px;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 25px;
+}
+
+.new-postbox {
+    display: inline-block;
+    width: 100%;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    outline: 0;
+}
+
+figure {
+    margin: 0 0 1rem;
+        margin-top: 0px;
+        margin-bottom: 1rem;
+}
+.newpst-input {
+    display: inline-block;
+    
+    vertical-align: top;
+    width: 85.5%;
+}
+.newpst-input > form {
+    display: inline-block;
+    width: 100%;
+}
+p {
+    font-size: 14px;
+    line-height: 26px;
+    text-align: justify;
+    color: #8c8b8b;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.modal-dialog {
+    max-width: 500px;
+    margin: 1.75rem auto;
+}
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: .5rem;
+    pointer-events: none;
+}
+textarea {
+    border: 1px solid #eeeeee;
+        border-bottom-color: rgb(238, 238, 238);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+    border-radius: 6px 6px 0 0;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 0;
+}
+textarea {
+    resize: none;
+}
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+
+.p_img {
+    border: 1px solid #eee;
+        border-top-color: rgb(238, 238, 238);
+        border-top-style: solid;
+        border-top-width: 1px;
+        border-bottom-color: rgb(238, 238, 238);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+    border-bottom: none;
+    border-top: none;
+    margin-top: -7px;
+	
+}
+.hidden {
+    display: none !important;
+}
+.uploaded_img {
+    border: 4px solid #f3f3f3;
+    height: 180px !important;
+    width: 165px !important;
+    margin-left: 35px;
+    margin-top: 10px;
+}
+img {
+    height: auto;
+    max-width: 100%;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+progress {
+    vertical-align: baseline;
+}
+
+
+.post_video {
+    height: 160px;
+    width: 230px;
+}
+
+.attachments {
+    border: 1px solid #eee;
+        border-top-color: rgb(238, 238, 238);
+        border-top-style: solid;
+        border-top-width: 1px;
+    display: block;
+    padding: 10px;
+    text-align: right;
+    border-top: 0;
+    background: #fff;
+}
+
+.attachments > ul {
+    list-style: outside none none;
+    margin-bottom: 0;
+    padding-left: 0;
+}
+.attachments li {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.attachments {
+    text-align: right;
+}
+a, a:hover, a:focus, a:active {
+    color: inherit;
+    outline: none;
+    -webkit-text-decoration: none;
+    -moz-text-decoration: none;
+    -ms-text-decoration: none;
+    -o-text-decoration: none;
+    text-decoration: none;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-text-decoration-skip: objects;
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+        font-size: 14px;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa-image::before, .fa-photo::before, .fa-picture-o::before {
+    content: "\f03e";
+}
+
+.fa {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.fa, .fa-stack {
+    display: inline-block;
+}
+
+.fileContainer {
+    color: #d8d8d8;
+    font-size: 11px;
+    margin: 0 0 0 5px;
+    position: relative;
+    text-transform: capitalize;
+}
+
+.fileContainer [type="file"] {
+    cursor: pointer;
+    display: block;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    position: absolute;
+    right: 0px;
+    text-align: right;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+}
+label {
+    display: inline-block;
+    margin-bottom: .5rem;
+}
+button{
+	background-color: #33c7ff;
+	border: none;
+  color: white;
+  padding: 8px 20px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+button, input {
+    overflow: visible;
+}
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+[type="submit"], button, html [type="button"] {
+    cursor: pointer;
+}
+[type="reset"], [type="submit"], button, html [type="button"] {
+    -webkit-appearance: button;
+}
+
+button, input, optgroup, select, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+textarea {
+    resize: none;
+}
+textarea {
+    border: 1px solid #eeeeee;
+        border-bottom-color: rgb(238, 238, 238);
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-radius: 6px 6px 0 0;
+    padding: 10px;
+    width: 100%;
+    border-bottom: 0;
+}
+textarea {
+    overflow: auto;
+    resize: vertical;
+}
+input, button, select, optgroup, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.oilpricenettable2 {
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+.oilpricenettable2 {
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+table {
+    border-collapse: collapse;
+}
+.3div{
+	display:block;
+	background-color:#fff;
+	margin-top:50%;
+	
+}
