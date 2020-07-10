@@ -95,7 +95,15 @@
                             </ul>
                         </li>
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                                <div class="user-nav d-sm-flex d-none"><span class="user-name text-bold-600">John Doe</span><span class="user-status">Available</span></div><span><img class="round" src="../app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40"></span>
+                                <div class="user-nav d-sm-flex d-none">
+                                    <span class="user-name text-bold-600">{{user.first_name}} {{user.last_name}}</span>
+                                    <span class="user-status">Available</span>
+                                </div>
+                                <div>
+                                    <span><a href="/profileTimeline">
+                                    <img   class="round" src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avatar" height="40" width="40"></a>
+                                    </span>
+                                </div>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
 								<a class="dropdown-item" href="/profile"><i class="feather icon-user"></i> Edit Profile</a>
@@ -111,4 +119,35 @@
         </div>
         </nav>
 </template>
+<script>
+import DataService from "../services/DataService"
+export default {
+    data(){
+        return {
+           profileImages:[],
+           user:[],
+        }
+    },
+    created() {
+         DataService.getUser()
+      .then(response=>{
+          this.user = response.data.user;
+          console.log(response.data.user);
+          console.log(this.user.dob);
+      })
+      
+     
+      DataService.getAllProfileImages()
+      .then(response=>{
+          this.profileImages = response.data;
+          console.log(response.data);
+      })
+      .catch(e => {
+          console.log(e);
+        });
+    }
+
+   
+}
+</script>
 

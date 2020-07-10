@@ -1,4 +1,7 @@
 <template>
+
+<div id="equipment">
+    <!-- BEGIN: Content-->
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -10,9 +13,7 @@
                             <h2 class="content-header-title float-left mb-0">shop</h2>
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a>
-                                    </li>
-                                    <li class="breadcrumb-item"><a href="#">eCommerce</a>
+                                    <li class="breadcrumb-item"><a href="/timeline">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active">Equipment
                                     </li>
@@ -30,6 +31,25 @@
                     </div>
                 </div>
             </div>
+
+     <div style="height:300px;width:100%">
+  <vl-map data-projection="EPSG:4326" style="height: 300px">
+    <vl-view :zoom.sync="zoom" :center.sync="center" :rotation.sync="rotation"></vl-view>
+
+    <vl-layer-tile>
+      <vl-source-osm></vl-source-osm>
+    </vl-layer-tile>
+
+    <vl-feature  v-for="geoData in coordinates" :key="geoData.coordinates" :id="geoData.coordinates">
+      <vl-geom-point :coordinates="geoData.coordinates"></vl-geom-point>
+        <vl-style-box>
+          <vl-style-icon :src="icon" :scale="0.4" :anchor="[0.5, 1]"></vl-style-icon>
+          <vl-style-text :text="geoData.companyName" font="14px  bold italic large" textAlign="left" style="color: red"></vl-style-text>
+        </vl-style-box>
+    </vl-feature>
+    
+  </vl-map>
+  </div>
             <div class="content-detached content-right">
                 <div class="content-body">
                     <!-- Ecommerce Content Section Starts -->
@@ -45,21 +65,7 @@
                                            {{count}} results found
                                         </div>
                                     </div>
-                                    <div class="view-options">
-                                        <select class="price-options form-control" id="ecommerce-price-options">
-                                            <option selected>Featured</option>
-                                            <option value="1">Lowest</option>
-                                            <option value="2">Highest</option>
-                                        </select>
-                                        <div class="view-btn-option">
-                                            <button class="btn btn-white view-btn grid-view-btn active">
-                                                <i class="feather icon-grid"></i>
-                                            </button>
-                                            <button class="btn btn-white list-view-btn view-btn">
-                                                <i class="feather icon-list"></i>
-                                            </button>
-                                        </div>
-                                    </div>
+                                
                                 </div>
                             </div>
                         </div>
@@ -73,12 +79,13 @@
                     <section id="ecommerce-searchbar">
                         <div class="row mt-1">
                             <div class="col-sm-12">
-                                <fieldset class="form-group position-relative">
-                                    <input type="text" class="form-control search-product" id="iconLeft5" placeholder="Search here" style="width:100%">
-                                    <div class="form-control-position">
-                                        <i class="feather icon-search"></i>
-                                    </div>
-                                </fieldset>
+                                <div class="search-container">
+                                            <form >
+                                            <input style="width:90%;height:35px" v-model="search" type="text" placeholder="Search.." name="search">
+                                            <button type="submit"  v-on:click="searchdata($event)" style="width:50px;height:35px; background: #ddd; color:black" ><i class="fa fa-search" style="margin-right:30px;" ></i></button>
+                                            </form>
+                                        </div>
+                    
                             </div>
                         </div>
                     </section>
@@ -87,56 +94,29 @@
                     <!-- Ecommerce Products Starts -->
                     <section id="ecommerce-products" class="grid-view">
                     {{msg}}
-                    <div v-for="equipment in equipments.data" :key="equipment">
-                        <router-link :to="{ name: 'details', params: { id: equipment.id,categoryid:2,subcategoryid:subid  } }"> <div class="card ecommerce-card">
-                            <div class="card-content" style="width:130px;height:300px;">
+                    <div class="row">
+                   <div v-for="equipment in equipments" :key="equipment" style="width:220px;height:280px;">
+                        <router-link :to="{ name: 'details', params: { id: equipment.id,categoryid:2 } }"> <div class="card ecommerce-card" style="margin-top:10px;width:200px;height:280px;">
+                            <div class="card-content" style="width:160px;height:120px;">
                                 <div class="item-img text-center">
 
-                                     <figure><span  style=" margin-top: 25px; margin-right: 20px;  margin-left: 20px;" ><img :src="equipment.Images[0].image"  style="width: 150px;height:120px;" /></span></figure>
+                                     <figure><span  style=" margin-top: 25px; margin-right: 20px;  margin-left: 20px;" ><img :src="equipment.Images[0].image"  style="margin-top:10px;width: 160px;height:120px;" /></span></figure>
                                 </div>
-                                <div class="card-body">
-                                    <div class="item-wrapper">
-                                        <div class="item-rating">
-                                            <div class="badge badge-primary badge-md">
-                                            
-                                            </div>
-                                        </div>
-                                        <div>
-                                        
-                                        </div>
-                                    </div>
+                                </div>
+                                <div class="card-body" style="margin-left:10px;width:180px;height:100px;">
+                                   
                                     <div class="item-name">
                                         <a href="app-ecommerce-details.html">{{equipment.name}}</a>
-                                        <p class="item-company">By <span class="company-name">Google</span></p>
+                                
                                     </div>
                                     <div>
                                         <p class="item-description">
-                                           {{equipment.discription}}
+                                           {{equipment.discription.slice(0, 70)}}......
                                         </p>
                                     </div>
                                 </div>
-                                <div class="item-options text-center">
-                                    <div class="item-wrapper">
-                                        <div class="item-rating">
-                                            <div class="badge badge-primary badge-md">
-                                                <span>4</span> <i class="feather icon-star"></i>
-                                            </div>
-                                        </div>
-                                        <div class="item-cost">
-                                            <h6 class="item-price">
-                                                $39.99
-                                            </h6>
-                                        </div>
-                                    </div>
-                                    <div class="wishlist">
-                                        <i class="fa fa-heart-o"></i> <span>Wishlist</span>
-                                    </div>
-                                    <div class="cart">
-                                        <i class="feather icon-shopping-cart"></i> <span class="add-to-cart">Add to cart</span> <a href="app-ecommerce-checkout.html" class="view-in-cart d-none">View In Cart</a>
-                                    </div>
-                                </div>
-                            </div>
                         </div></router-link>
+                        </div>
                         </div>
                     </section>
                     <!-- Ecommerce Products Ends -->
@@ -188,15 +168,14 @@
                                     </div>
                                     <ul class="list-unstyled categories-list" >
                                     
-                                      <li v-for="subcategory in subcategorys" :key="subcategory"> 
-                                            <span class="vs-radio-con vs-radio-primary py-25" v-on:click="equipment(subcategory.id)">
-                                                <input type="radio"  name="category-filter" value="false" >
-                                                <span class="vs-radio">
-                                                    <span class="vs-radio--border"></span>
-                                                    <span class="vs-radio--circle"></span>
-                                                </span>
-                                                <span class="ml-50">{{subcategory.subcategory_name}}</span>
-                                            </span>
+                                      <li v-for="subcategory in subcategories" :key="subcategory" > 
+                                            <div >
+                                             <span  style="font-size:15px;cursor: pointer;">{{subcategory.subcategory_name}}</span>    
+                                            
+                                             <input  style="float:right;transform : scale(1.5); " class="ml-50" type="checkbox" @change="fetchequipmentsData(checked)" name="category-filter" id="checkbox" :value="subcategory.id" v-model="checked" >
+                                           
+                                             </div>
+                                             <hr>
                                         </li>
 
                                       
@@ -218,9 +197,13 @@
             </div>
         </div>
     </div>
-    
-</template>
+    <!-- END: Content-->
 
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+
+</div>
+</template>
 <script>
 import ServicesDataService from "../services/ServicesDataService";
 import EquipmentDataService from "../services/EquipmentDataService";
@@ -228,48 +211,169 @@ import EquipmentDataService from "../services/EquipmentDataService";
   name: "Equipment",
   data() {
        return {
+             checked:[],
+           dataToDisplay: new Map(),
+           search:'',
+           equipmentsearch:[],
            equipments: [],
-           subcategorys:[],
+           subcategories:[],
            count:0,
            msg:'',
-           
+            zoom: 15,
+        center: [73.909382, 18.609025],
+        rotation: 0,
+        icon: require('./../app-assets/images/marker.png'),
+        coordinates:[],
            
       };
-  },created() {
+  },
+  
+  
+ 
+  created() {
+
         ServicesDataService.getsubcategory(2)
         .then(response => {
-          this.subcategorys = response.data;
+          this.subcategories = response.data;
           console.log(response.data);
           
         })
         .catch(e => {
           console.log(e);
         });
-  },
-   methods: {
-    equipment: function (id) {
-        this.subid=id;
-       EquipmentDataService.getequipmentsubcategoryid(id)
+       
+         EquipmentDataService.getAll()
         .then(response => {
-          if(((response.data).success)==false){
-               
-               this.equipments=[];
-               this.msg="equipment not available";
-               this.count=0;
-             }
-             else{
+          this.equipments = response.data.data.data;
+          this.count=(this.equipments).length;
+          console.log(this.equipments);
 
-              this.count = ((response.data).data).length;
-             console.log(response.data);
-             this.equipments=response.data;
-             this.msg='';
+  class GeoData{
+                constructor(companyName, coordinates) {
+                    this.companyName = companyName;
+                    this.coordinates = coordinates;
+                }
+             }
+            for(let i =0;i<(this.equipments).length;i++)
+             {
+                  
+             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+               let companyName = this.equipments[i].company;
+               let geoData = new GeoData (companyName,coordinates);
+                 this.coordinates.push(geoData); 
+                 
+            
              }
         })
         .catch(e => {
           console.log(e);
-        }); 
+        });
+       
+               
+
+  },
+   methods: {
+     fetchequipmentsData: async function(ids){
+        document.getElementById("equipment").style.opacity = 0.5;
+
+if(ids.length==0){
+    let responseData = await EquipmentDataService.getAll()
+          this.equipments = responseData.data.data.data;
+        document.getElementById("equipment").style.opacity = 1;
+         
+    return;
+}
+            this.coordinates = [];
+             class GeoData{
+                constructor(companyName, coordinates) {
+                    this.companyName = companyName;
+                    this.coordinates = coordinates;
+                }
+             }
+
+        this.equipments= [];
+        for (let [key, value] of this.dataToDisplay) {
+            if(!ids.includes(key)){
+                this.dataToDisplay.delete(key);
+                console.log("Deleted key ="+key)+", Deleted value ="+value;
+            }
+        }
+
+       
+
+        for(let i=0;i<ids.length;i++){
+            if(!this.dataToDisplay.has(ids[i])){
+            let response = await EquipmentDataService.getequipmentsubcategoryid(ids[i]);
+           {
+                this.dataToDisplay.set(ids[i], response.data.data);
+                }
+            
+            }
+         }
+
+        for (let [ key ,value] of this.dataToDisplay) {
+          console.log("key = "+key+",Value = "+value);
+         if (typeof value !== 'undefined')
+          for(let item of value){
+                this.equipments.push(item);
+              
+          }
+         
+        }
+         for(let i =0;i<(this.equipments).length;i++)
+             {
+                  
+             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+               let companyName = this.equipments[i].company;
+               let geoData = new GeoData (companyName,coordinates);
+                 this.coordinates.push(geoData); 
+                 
+            
+             }
+             this.count=(this.equipments).length;
+        
+        console.log(this.equipments);
+        console.log("this is checkbox");
       
-    }
+        document.getElementById("equipment").style.opacity = 1;
+        
+        
+    },
+  
+    searchdata: async function(event){
+         this.coordinates = [];
+             class GeoData{
+                constructor(companyName, coordinates) {
+                    this.companyName = companyName;
+                    this.coordinates = coordinates;
+                }
+             }
+        document.getElementById("equipment").style.opacity = 0.5;
+           event.preventDefault();
+            this.equipments=[];
+            this.coordinates=[];
+                var formData = new FormData();
+                formData.append("search" ,this.search);
+                
+               let response = await EquipmentDataService.equipmentsearch(formData);
+               for(let item of response.data.data){
+                    this.equipments.push(item);
+                }
+                 for(let i =0;i<(this.equipments).length;i++)
+             {
+                  
+             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+               let companyName = this.equipments[i].company;
+               let geoData = new GeoData (companyName,coordinates);
+                 this.coordinates.push(geoData); 
+                 
+            
+             }
+               
+             this.msg='';
+        document.getElementById("equipment").style.opacity = 1;
+
+             },
   }
 
   

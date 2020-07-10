@@ -1,10 +1,10 @@
 <template>
     <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
-        <div class="navbar-header">
+        <div class="navbar-header" style="height:100px">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
-                        
-                        <h2 class="brand-text mb-0">EnPNeeds</h2>
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="/timeline">
+                        <img style="height:70px" src="./../app-assets/images/logo.png">
+                        <h1 class="brand-text mb-0">ENPNEEDS</h1>
                     </a></li>
                 
             </ul>

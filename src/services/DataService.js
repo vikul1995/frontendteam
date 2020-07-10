@@ -102,6 +102,83 @@ class DataService {
   createLike(data){
     return http.post("/api/likepost",data)    
   }
+ 
+  getUsers(){
+    return http.get("./api/users");
+  }
+  createReplyLike(data){
+    return http.post("./api/likereply",data);
+  }
+  getUser(){
+    return http.get("./api/user");
+  }
+
+  getAllProfileImages(){
+    return http.get("./api/profileimg");
+  }
+  profile(data) {
+    console.log ('create DataService');
+    return http.post("./api/profiles", data);
+  
+  }
+  updateprofile(id,data) {
+    return http.put(`./api/profiles/${id}?${data}`);
+  
+  }
+  about(data) {
+    return http.post("./api/abouts",data);
+  }
+  
+  getabout() {
+    return http.get("./api/abouts");
+  }
+  
+  updateabout(id,data) {
+    return http.put(`./api/abouts/${id}?${data}`);
+  
+  }
+  experiences(data){
+  return http.post("./api/experiences",data);
+  
+  }
+  
+  getexperiences(){
+    return http.get("./api/experiences");
+    
+    }
+    updateexp(id,data) {
+      return http.put(`./api/experiences/${id}?${data}`);
+    
+    }
+    getimage()
+    {
+      return http.get("./api/profileimg");
+    
+    }
+    postimage(data)
+    {
+      return http.post("./api/profileimg",data);
+    
+    }
+    
+  education(data) {
+  return http.post("./api/education",data);
+  
+  }
+  
+  geteducation() {
+    return http.get("./api/education");
+    
+    }
+    updateedu(id,data) {
+      return http.put(`./api/education/${id}?${data}`);
+    
+    }
+    
+  getProfile(){
+    return http.get("./api/profiles",);
+  }
+
 }
 
 export default new DataService();

@@ -25,9 +25,14 @@
                                             <div class="card-body pt-0">
                                                 
                                                     <div class="form-label-group">
-                                                        <input type="text" id="inputName" class="form-control" placeholder="Name" required
-                                                        v-model="register.name" name="name">
-                                                        <label for="inputName">Name</label>
+                                                        <input type="text" id="inputName" class="form-control" placeholder="First Name" required
+                                                        v-model="register.first_name" name="first_name">
+                                                        <label for="inputName">First Name</label>
+                                                    </div>
+                                                    <div class="form-label-group">
+                                                        <input type="text" id="inputName" class="form-control" placeholder="Last Name" required
+                                                        v-model="register.last_name" name="last_name">
+                                                        <label for="inputName">Last Name</label>
                                                     </div>
                                                     <div class="form-label-group">
                                                         <input type="email" id="inputEmail" class="form-control" placeholder="Email" required
@@ -36,21 +41,21 @@
                                                     </div>
                                                     <div class="form-label-group">
                                                         <label for="dob">Birthday:</label>
-                                                        <input type="date" class="form-control" id="dob" name="dob">
+                                                        <input type="date" class="form-control" id="dob" name="dob" v-model="register.dob" required>
                                                     </div>
                                                         <p class="">Gender:</p>
-                                                        <div id="genderContainer" name="genderContainer" class="genderOptions" >
+                                                        <div id="genderContainer" name="genderContainer" class="genderOptions">
 
                                                             <div id="male" class="floatBlock">
-                                                                <label for="male" style="padding-right: 20px"> <input id="male" name="gender" type="radio" value="Male" />  Male  </label>
+                                                                <label for="male" style="padding-right: 20px"> <input id="male" name="gender" v-model="register.gender" type="radio" value="Male" required/>  Male  </label>
                                                             </div>
 
                                                             <div id="demale" class="floatBlock">
-                                                                <label for="female" style="padding-right: 20px"> <input id="female" name="gender" type="radio" value="Female" /> Female </label>
+                                                                <label for="female" style="padding-right: 20px"> <input id="female" name="gender" v-model="register.gender" type="radio" value="Female" /> Female </label>
                                                             </div>
 
                                                             <div id="others" class="floatBlock">
-                                                                <label for="others"> <input id="others" name="gender" type="radio" /> Others </label>
+                                                                <label for="others"> <input id="others" name="gender" v-model="register.gender" type="radio" /> Others </label>
                                                         </div>
 
                                                     </div>
@@ -89,8 +94,11 @@ import DataService from "../services/DataService";
             return {
                 
                 register:{
-              name: '',
+              first_name: '',
+              last_name: '',
               email: '',
+              dob: '',
+              gender: '',
               password: '',
               c_password: ''
                 },
@@ -102,8 +110,11 @@ import DataService from "../services/DataService";
             saveRegister(event){
                 event.preventDefault();
                 var formData = new FormData();
-                    formData.append("name", this.register.name);
+                    formData.append("first_name", this.register.first_name);
+                    formData.append("last_name", this.register.last_name);
                     formData.append("email", this.register.email);
+                    formData.append("dob", this.register.dob);
+                    formData.append("gender", this.register.gender);
                     formData.append("password", this.register.password);
                     formData.append("c_password", this.register.c_password);
                 console.log(formData)
