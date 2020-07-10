@@ -68,6 +68,16 @@
                                 </div>
 							
                         </div>
+                        <div class="col-3">
+                            <div class="card">
+                                    
+                                    <div class="card-body">
+										
+                                        Advertisement
+                                        
+									</div>
+								</div>
+                        </div>
                     </div>
                     <section id="profile-info">
                         <div class="row">
@@ -80,12 +90,14 @@
                                         <i class="feather icon-more-horizontal cursor-pointer"></i>
                                     </div>
                                     <div class="card-body">
-                                        <div class="d-flex justify-content-start align-items-center mb-1">
-                                            <div class="avatar mr-50">
-                                                <img src="../app-assets/images/portrait/small/avatar-s-5.jpg" alt="avtar img holder" height="35" width="35">
+                                        <div class="d-flex justify-content-start align-items-center mb-1" v-for="user in users.data" :key="user">
+                                            <div class="avatar mr-50" v-for="img in profileImages.data" :key="img">
+                                                <div v-if="img.user_id==user.id">
+                                                    <img :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
+                                                </div>
                                             </div>
                                             <div class="user-page-info">
-                                                <h6 class="mb-0">Carissa Dolle</h6>
+                                                <h6 class="mb-0">{{user.first_name}} {{user.last_name}}</h6>
                                                 <span class="font-small-2">6 Mutual Friends</span>
                                             </div>
                                             <button type="button" class="btn btn-primary btn-icon ml-auto"><i class="feather icon-user-plus"></i></button>
@@ -99,13 +111,13 @@
                                         <h4 class="card-title">Suggested Pages</h4>
                                     </div>
                                     <div class="card-body suggested-block">
-                                        <div class="d-flex justify-content-start align-items-center mb-1">
+                                        <div class="d-flex justify-content-start align-items-center mb-1" v-for="company in companies.data.data" :key="company">
                                             <div class="avatar mr-50">
-                                                <img src="../app-assets/images/profile/pages/page-09.jpg" alt="avtar img holder" height="35" width="35">
+                                                <img :src="company.image" alt="avtar img holder" height="35" width="35">
                                             </div>
                                             <div class="user-page-info">
-                                                <p>Rockose</p>
-                                                <span class="font-small-2">Company</span>
+                                                <p>{{company.name}}</p>
+                                                
                                             </div>
                                             <div class="ml-auto"><i class="feather icon-star"></i></div>
                                         </div>
@@ -115,24 +127,37 @@
 								
                             </div>
                             <div class="col-lg-6 col-12">
-                                <div class="card" v-for="post in posts.data" :key="post.user_id" :link="post">
+                                <div class="card" v-for="post in posts.data.data" :key="post.user_id" :link="post" >
                                     <div class="card-body" >
                                         <div class="d-flex justify-content-start align-items-center mb-1">
                                             <div class="avatar mr-1">
                                                 <img src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avtar img holder" height="45" width="45">
                                             </div>
                                             <div class="user-page-info">
-                                                <p class="mb-0">{{post.name}}</p>
-                                                <p class="mb-0">Designation: {{post.designation}}</p>
+                                                <div v-for="user in users.data" :key="user">
+                                                    <p class="mb-0"  v-if="post.user_id==user.id">{{user.first_name}} {{ user.last_name}}</p>
+                                                </div>
+                                                <p class="mb-0"> {{post.designation}}</p>
                                                 <span class="font-small-2">Published at: {{post.created_at}}</span>
                                             </div>
                                             
+                                            <div class="ml-auto user-like text-danger">
+                                            <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;"><i class="feather icon-more-horizontal cursor-pointer"></i></button>
+
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+</div>
+
+                                            
+                                            
+                                            
+                                            </div>
                                         </div>
                                         <p>{{post.description}}</p> 
                                         <div >
                                             <div v-if="post.Images.length==1">
-                                            <div style="height:300px; width:400px; border-style:solid">
-                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:300px;width:400px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
+                                            <div style="height:300px; width:540px; border-style:solid">
+                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:300px;width:540px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                         
                                                 </div>
                                         </div>
@@ -188,22 +213,22 @@
                                       
                                         <div class="d-flex justify-content-start align-items-center mb-1">
                                             <div class="d-flex align-items-center">
-                                                <i  id="likeButton" @click="clickLike(post.id)" class="feather icon-heart font-medium-2 mr-50" ></i>
+                                                <i  id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50" ></i>
                                                 <span>{{post.likecount}}</span>
                                             </div>
                                             <div class="ml-2">
                                                 <ul class="list-unstyled users-list m-0  d-flex align-items-center">
                                                     <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Trina Lynes" class="avatar pull-up">
-                                                        <img class="media-object rounded-circle" src="../app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" height="30" width="30">
+                                                       
                                                     </li>
                                                     
                                                     <li class="d-inline-block pl-50">
-                                                        <span>+140 more</span>
+                                                        <span></span>
                                                     </li>
                                                 </ul>
                                             </div>
                                             <p class="ml-auto d-flex align-items-center">
-                                                <i class="feather icon-message-square font-medium-2 mr-50"></i>77
+                                                <i class="feather icon-message-square font-medium-2 mr-50"></i>
                                             </p>
                                         </div>
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="comment in comments.data" :key="comment">
@@ -212,8 +237,11 @@
                                                     <img src="../app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="30" width="30">
                                                 </div>
                                                 <div class="user-page-info" >
-                                                    
-                                                        <h6 class="mb-0">{{comment.id}}</h6>
+                                                    <div v-for="user in users.data" :key="user">
+                                                        <div v-if="comment.user_id==user.id">
+                                                            <h6 class="mb-0">{{user.first_name}} {{user.last_name}}</h6>
+                                                        </div>
+                                                    </div>
                                                         <span class="font-small-2">{{comment.comment}}</span>
                                                             
                                                             <div v-for="reply in replies.data" :key="reply" style="margin-left:10px;">
@@ -227,7 +255,7 @@
                                                 
                                                 <div class="ml-auto cursor-pointer">
                                                     <div>
-                                                        <i class="feather icon-heart mr-50"></i>
+                                                        <i class="feather icon-heart mr-50" @click="clickOnReply(comment.id,reply.id)"></i><span>{{reply.replylikecount}}</span>
                                                         <i :id="comment.id" class="feather icon-message-square" v-on:click="seen =! seen">
                                                             <textarea v-if="seen" class="form-control" id="label-textarea"  rows="2" placeholder="Reply" v-model="reply"></textarea>
                                                             <button v-if="seen" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
@@ -248,32 +276,22 @@
                                 
                             </div>
                             <div class="col-lg-3 col-12">
-                                <div class="card">
+                                <div class="">
                                    
-                                    <div class="card-body">
-                                        <div class="row">
-                                            
-												
-													
-											
-										</div>
+                                    <div>
+												<wti />
 									</div>
 								</div>
                                 
-                                <div class="card">
+                                <div class="" style="margin-top: 20px;">
                                     
-                                    <div class="card-body">
-                                       
+                                    <div class="">
+                                       <brent/>
                                     </div>
                                 
 								</div>
-								<div class="card">
-                                    
-                                    <div class="card-body">
-										
-
-									</div>
-								</div>
+                                
+								
                             </div>
                         </div>
                         <div class="row">
@@ -290,9 +308,19 @@
 </template>
 
 <script>
+/* eslint-disable no-useless-escape */
 import DataService from "../services/DataService"
+import wti from '@/components/wti';
+import brent from '@/components/brent';
+
 export default {
+    title: 'HomePage',
   name: "posts",
+  components: {
+        wti ,
+        brent 
+        
+    },
   data() {
       
        return {
@@ -300,9 +328,14 @@ export default {
            replies: [],
            comments: [],
            posts: [],
+           users:[],
+           profileImages:[],
+           companies: [],
            comment: '',
            reply: '',
            like: '',
+           user:'',
+           company:'',
            post: {
                 name: '',
                 description: '',
@@ -312,7 +345,29 @@ export default {
            submitted: false,
                 message:''
       };
-  },created() {
+  },
+  created() {
+      DataService.getAllProfileImages()
+      .then(response=>{
+          this.profileImages = response.data;
+          console.log(response.data);
+      })
+      DataService.getAllCompany()
+      .then(response=>{
+          this.companies = response.data;
+          console.log(response.data);
+      })
+      .catch(e => {
+          console.log(e);
+        });
+      DataService.getUsers()
+      .then(response=>{
+          this.users = response.data;
+          console.log(response.data);
+      })
+      .catch(e => {
+          console.log(e);
+        });
        DataService.getAll()
         .then(response => {
           this.posts = response.data;
@@ -342,8 +397,30 @@ export default {
                 console.log(e);
             })
     },
-            
+     
+
+           
   methods: {
+      myFunction(x) {
+  x.classList.toggle("feather icon-heart font-medium-2 mr-50");
+},
+      clickOnReply(reply_id, comment_id){
+          var cor = new FormData();
+          cor.append("reply_id", reply_id);
+          cor.append("comment_id",comment_id);
+
+          console.log(cor);
+          DataService.createReplyLike(cor)
+          .then(response=>{
+              console.log(response.data);
+              this.message="Successfully Like"
+              alert("Reply Like");
+          })
+          .catch(e=>{
+              console.log(e);
+              this.message="Invalid"
+          });
+      },
       clickLike(id){
           var lk=new FormData();
           lk.append("post_id", id);
