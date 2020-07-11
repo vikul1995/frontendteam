@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import VertxEventBus from 'vue-vertx3-eventbus-client';
 
 import VuePageTitle from 'vue-page-title'
  
@@ -37,6 +38,12 @@ import './app-assets/css/pages/dashboard-analytics.css'
 import './app-assets/css/pages/card-analytics.css'
 import './app-assets/css/plugins/tour/tour.css'
 import './app-assets/css/components.css'
+
+//import './app-assets/vendors/js/vendors.min.js'
+//import './app-assets/js/scripts/pages/user-profile.js'
+//import './app-assets/js/core/app-menu.js'
+//import './app-assets/js/core/app.js'
+//import './app-assets/js/scripts/components.js'
 
 
 import { Map, TileLayer, OsmSource, Geoloc, PointGeom, StyleBox, Feature, IconStyle, TextStyle  } from 'vuelayers'

@@ -91,7 +91,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="user in users.data" :key="user">
-                                            <div class="avatar mr-50" v-for="img in profileImages.data" :key="img">
+                                            <div class="avatar mr-50 " v-for="img in profileImages.data" :key="img">
                                                 <div v-if="img.user_id==user.id">
                                                     <img :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
                                                 </div>
@@ -130,8 +130,10 @@
                                 <div class="card" v-for="post in posts.data.data" :key="post.user_id" :link="post" >
                                     <div class="card-body" >
                                         <div class="d-flex justify-content-start align-items-center mb-1">
-                                            <div class="avatar mr-1">
-                                                <img src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avtar img holder" height="45" width="45">
+                                            <div v-for="img in profileImages.data" :key="img">
+                                                <div class="avatar mr-1"  v-if="img.user_id==post.user_id">
+                                                    <img :src="img.profileimg" alt="avtar img holder" style="height:45px;width:45px;object-fit:cover;">
+                                                </div>
                                             </div>
                                             <div class="user-page-info">
                                                 <div v-for="user in users.data" :key="user">
@@ -141,22 +143,21 @@
                                                 <span class="font-small-2">Published at: {{post.created_at}}</span>
                                             </div>
                                             
-                                            <div class="ml-auto user-like text-danger">
-                                            <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;"><i class="feather icon-more-horizontal cursor-pointer"></i></button>
-
-<div id="id01" class="modal">
-  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-</div>
-
-                                            
-                                            
-                                            
+                                            <div class="ml-auto user-like">
+                                                <button id="show-modal"  style="background-color:white;color:black;">
+                                                <i class="fa fa-edit" style="font-size:20px" v-on:click="seen =! seen"></i></button>
+                                                <div id="myDropdown" v-if="seen" class="dropdown-content">
+                                                    <a href="#home">Home</a>
+                                                    <a href="#about">About</a>
+                                                    <a href="#contact">Contact</a>
+                                                </div>
                                             </div>
+                                         
                                         </div>
                                         <p>{{post.description}}</p> 
                                         <div >
                                             <div v-if="post.Images.length==1">
-                                            <div style="height:300px; width:540px; border-style:solid">
+                                            <div style="height:300px; width:100%; border-style:solid">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:300px;width:540px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                         
                                                 </div>
@@ -233,8 +234,10 @@
                                         </div>
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="comment in comments.data" :key="comment">
                                             <div v-if="post.id == comment.post_id">
-                                                <div class="avatar mr-50">
-                                                    <img src="../app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="30" width="30">
+                                                <div v-for="img in profileImages.data" :key="img">
+                                                    <div class="avatar mr-50" v-if="comment.user_id==img.user_id">
+                                                        <img :src="img.profileimg" alt="Avatar" style="height:25px;width:25px;object-fit:cover;">
+                                                    </div>
                                                 </div>
                                                 <div class="user-page-info" >
                                                     <div v-for="user in users.data" :key="user">
@@ -308,6 +311,7 @@
 </template>
 
 <script>
+
 /* eslint-disable no-useless-escape */
 import DataService from "../services/DataService"
 import wti from '@/components/wti';
@@ -401,9 +405,8 @@ export default {
 
            
   methods: {
-      myFunction(x) {
-  x.classList.toggle("feather icon-heart font-medium-2 mr-50");
-},
+      
+     
       clickOnReply(reply_id, comment_id){
           var cor = new FormData();
           cor.append("reply_id", reply_id);
@@ -514,3 +517,24 @@ export default {
                 },
 }
 </script>
+<style>
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.show {display: block;}
+
+
+</style>

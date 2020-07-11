@@ -101,7 +101,7 @@
                                 </div>
                                 <div>
                                     <span><a href="/profileTimeline">
-                                    <img   class="round" src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avatar" height="40" width="40"></a>
+                                    <img   class="round" src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avatar" height="40" width="40" style="object-f"></a>
                                     </span>
                                 </div>
                             </a>
