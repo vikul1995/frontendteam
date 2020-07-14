@@ -1,5 +1,7 @@
 <template>
-        <div class="app-content content">
+        <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>    
         <div class="content-wrapper">
             
             <div class="content-body">
@@ -34,14 +36,14 @@
                                                         
                                                         <li>
                                                             <div style="position: relative; overflow: hidden; display: inline-block;"> 
-                                                            <i class="fa fa-image"></i>
+                                                            <i class="fa fa-image cursor-pointer"></i>
                                                             
                                                                 <input style="font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0;" type="file" data-toggle="tooltip" title="" name="uploadfile" id="post_image" accept="image/*" data-original-title="Image">
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div style="position: relative; overflow: hidden; display: inline-block;">
-                                                            <i class="fa fa-video-camera"></i>
+                                                            <i class="fa fa-video-camera cursor-pointer"></i>
                                                             
                                                                 <input style="font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0;" type="file"  name="uploadvideo" id="post_video" data-toggle="tooltip" title="" accept="video/mp4,video/x-m4v,video/*" data-original-title="video">
                                                             </div>
@@ -91,11 +93,9 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="user in users.data" :key="user">
-                                            <div class="avatar mr-50 " v-for="img in profileImages.data" :key="img">
-                                                <div v-if="img.user_id==user.id">
-                                                    <img :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
-                                                </div>
-                                            </div>
+                                            <div class="avatar mr-50 "><div v-for="img in profileImages.data" :key="img">
+                                                    <img v-if="img.user_id==user.id" :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
+                                            </div></div>
                                             <div class="user-page-info">
                                                 <h6 class="mb-0">{{user.first_name}} {{user.last_name}}</h6>
                                                 <span class="font-small-2">6 Mutual Friends</span>
@@ -113,15 +113,13 @@
                                     <div class="card-body suggested-block">
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="company in companies.data.data" :key="company">
                                             <div class="avatar mr-50">
-                                                <img :src="company.image" alt="avtar img holder" height="35" width="35">
+                                                <img :src="company.image" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
                                             </div>
                                             <div class="user-page-info">
-                                                <p>{{company.name}}</p>
-                                                
+                                                <p>{{company.name}}</p>  
                                             </div>
                                             <div class="ml-auto"><i class="feather icon-star"></i></div>
-                                        </div>
-                                        
+                                        </div>    
                                     </div>
                                 </div>
 								
@@ -145,12 +143,9 @@
                                             
                                             <div class="ml-auto user-like">
                                                 <button id="show-modal"  style="background-color:white;color:black;">
-                                                <i class="fa fa-edit" style="font-size:20px" v-on:click="seen =! seen"></i></button>
-                                                <div id="myDropdown" v-if="seen" class="dropdown-content">
-                                                    <a href="#home">Home</a>
-                                                    <a href="#about">About</a>
-                                                    <a href="#contact">Contact</a>
-                                                </div>
+                                                <i class="fa fa-edit" style="font-size:20px"></i></button>
+                                                
+                                                
                                             </div>
                                          
                                         </div>
@@ -203,7 +198,7 @@
                                       </div>
                                    </div>
                                   
-                                 <div  style="height:40px; width:400px;">
+                                 <div style="height:40px; width:400px;">
                                  </div>
                                        
                                         </div>
@@ -214,7 +209,7 @@
                                       
                                         <div class="d-flex justify-content-start align-items-center mb-1">
                                             <div class="d-flex align-items-center">
-                                                <i  id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50" ></i>
+                                                <i  id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50 cursor-pointer fa-3x" ></i>
                                                 <span>{{post.likecount}}</span>
                                             </div>
                                             <div class="ml-2">
@@ -232,44 +227,66 @@
                                                 <i class="feather icon-message-square font-medium-2 mr-50"></i>
                                             </p>
                                         </div>
-                                        <div class="d-flex justify-content-start align-items-center mb-1" v-for="comment in comments.data" :key="comment">
-                                            <div v-if="post.id == comment.post_id">
-                                                <div v-for="img in profileImages.data" :key="img">
-                                                    <div class="avatar mr-50" v-if="comment.user_id==img.user_id">
-                                                        <img :src="img.profileimg" alt="Avatar" style="height:25px;width:25px;object-fit:cover;">
-                                                    </div>
-                                                </div>
-                                                <div class="user-page-info" >
-                                                    <div v-for="user in users.data" :key="user">
-                                                        <div v-if="comment.user_id==user.id">
-                                                            <h6 class="mb-0">{{user.first_name}} {{user.last_name}}</h6>
-                                                        </div>
-                                                    </div>
-                                                        <span class="font-small-2">{{comment.comment}}</span>
-                                                            
-                                                            <div v-for="reply in replies.data" :key="reply" style="margin-left:10px;">
-                                                                <div v-if="post.id == reply.post_id">
-                                                                    <div v-if="reply.comment_id == comment.id">
-                                                                        <span class="font-small-2">{{reply.reply}}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                        <div v-for="comment in comments.data" :key="comment">
+                                            <div class="d-flex justify-content-start align-items-center mb-1"  v-if="post.id == comment.post_id">
+                                                
+                                                    <div class="avatar mr-50" style="margin-block-end: auto;">
+                                                        <span v-for="img in profileImages.data" :key="img">
+                                                        <img v-if="comment.user_id==img.user_id" :src="img.profileimg" alt="Avatar" style="height:30px;width:30px;object-fit:cover;">
+                                                        </span>
                                                     </div>
                                                 
-                                                <div class="ml-auto cursor-pointer">
-                                                    <div>
-                                                        <i class="feather icon-heart mr-50" @click="clickOnReply(comment.id,reply.id)"></i><span>{{reply.replylikecount}}</span>
-                                                        <i :id="comment.id" class="feather icon-message-square" v-on:click="seen =! seen">
-                                                            <textarea v-if="seen" class="form-control" id="label-textarea"  rows="2" placeholder="Reply" v-model="reply"></textarea>
-                                                            <button v-if="seen" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
-                                                        </i>
+                                                    <div class="user-page-info" >
+                                                    
+                                                        <span v-for="user in users.data" :key="user">
+                                                            <h6 class="mb-0" v-if="comment.user_id==user.id">{{user.first_name}} {{user.last_name}}</h6>
+                                                        </span>
+                                                        <span class="font-small-2">{{comment.comment}}</span>
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true" style="margin-left:10px;padding:0px 10px;cursor: pointer;"  @click="likeComment(comment.id,post.id)"></i>
+                                                        <span>{{comment.commentlikecount}}</span>
+                                                        
+                                                          <span v-if="seen">
+                                                            
+                                                                <div v-for="reply in replies.data" :key="reply" style="margin-left:10px;">
+                                                                    <div v-if="post.id == reply.post_id">
+                                                                        <div v-if="reply.comment_id == comment.id">
+                                                                            <div class="avatar mr-50" style="float: left;">
+                                                                                    <span v-for="img in profileImages.data" :key="img">
+                                                                                        <img v-if="reply.user_id==img.user_id" :src="img.profileimg" alt="Avatar" style="height:25px;width:25px;object-fit:cover;">
+                                                                                    </span>
+                                                                            </div>
+                                                                            <div class="user-page-info" >
+                                                                                <span v-for="user in users.data" :key="user">
+                                                                                    <h6 class="mb-0" v-if="reply.user_id==user.id">{{user.first_name}} {{user.last_name}}</h6>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span class="font-small-2">{{reply.reply}}</span>   
+                                                                            <i class="fa fa-thumbs-up" aria-hidden="true" style="margin-left:10px;padding:0px 10px;cursor: pointer;"  @click="clickOnReply(reply.id, comment.id)"></i>
+                                                                            <span>{{reply.replylikecount}}</span>
+                                                                        </div>
+                                                                         </div>
+                                                                    
+                                                                </div>                                                                
+                                                            </span>
+                                                              <textarea v-if="seen" style="margin-left:20px;    display: inline-block;" class="form-control" id="label-textarea"  rows="1" placeholder="Reply" v-model="reply"></textarea>
+                                                            <button v-if="seen" style="margin-left:20px;" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
+                                                        
+                                                            
                                                     </div>
+                                                
+                                                <div class="ml-auto cursor-pointer" style="margin-block-end: auto;">
+                                                    <i class="fa fa-reply" aria-hidden="true"></i>
+                                                    <span v-on:click="seen =! seen" style="font-size:12px;padding-right:20px;padding-left:5px"> replies</span>
+                                                        
+                                                        
+                                                        
+                                                    
                                                 </div>
                                             </div>
                                         </div>
                                        
                                         <fieldset class="form-label-group mb-50">
-                                            <textarea class="form-control" id="label-textarea" rows="3"  placeholder="Add Comment" v-model="comment"></textarea>
+                                            <textarea class="form-control" id="label-textarea" rows="2"  placeholder="Add Comment" v-model="comment"></textarea>
                                             <label for="label-textarea">Add Comment</label>
                                         </fieldset>
                                         <button type="button" class="btn btn-sm btn-primary" @click="postComment(post.id)">Post Comment</button>
@@ -281,14 +298,14 @@
                             <div class="col-lg-3 col-12">
                                 <div class="">
                                    
-                                    <div>
+                                    <div  style="text-align:-webkit-center">
 												<wti />
 									</div>
 								</div>
                                 
                                 <div class="" style="margin-top: 20px;">
                                     
-                                    <div class="">
+                                    <div class="" style="text-align:-webkit-center">
                                        <brent/>
                                     </div>
                                 
@@ -316,19 +333,22 @@
 import DataService from "../services/DataService"
 import wti from '@/components/wti';
 import brent from '@/components/brent';
+import ModalDirection from "@/components/Modal";
 
 export default {
     title: 'HomePage',
   name: "posts",
   components: {
         wti ,
-        brent 
+        brent ,
+        ModalDirection
         
     },
   data() {
       
        return {
            seen: false,
+           modalOpen: false,
            replies: [],
            comments: [],
            posts: [],
@@ -405,8 +425,25 @@ export default {
 
            
   methods: {
-      
-     
+      openModal() {
+            this.modalOpen = !this.modalOpen;
+        },
+     likeComment(comment_id,post_id){
+         var lc=new FormData();
+         lc.append("post_id", post_id);
+         lc.append("comment_id", comment_id);
+
+         console.log(lc);
+         DataService.commentLike(lc)
+         .then(response=>{
+         this.message="Comment Successfuly Like"
+         alert("Comment likes");
+         })
+          .catch(e=>{
+              console.log(e);
+              this.message="Invalid"
+          });
+     },
       clickOnReply(reply_id, comment_id){
           var cor = new FormData();
           cor.append("reply_id", reply_id);

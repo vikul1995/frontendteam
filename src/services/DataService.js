@@ -102,7 +102,9 @@ class DataService {
   createLike(data){
     return http.post("/api/likepost",data)    
   }
- 
+  commentLike(data){
+    return http.post("./api/likecomment",data)
+  }
   getUsers(){
     return http.get("./api/users");
   }
