@@ -245,9 +245,9 @@
                                                         <i class="fa fa-thumbs-up" aria-hidden="true" style="margin-left:10px;padding:0px 10px;cursor: pointer;"  @click="likeComment(comment.id,post.id)"></i>
                                                         <span>{{comment.commentlikecount}}</span>
                                                         
-                                                          <span v-if="seen">
+                                                          <span>
                                                             
-                                                                <div v-for="reply in replies.data" :key="reply" style="margin-left:10px;">
+                                                                <div v-for="reply in replies.data" :key="reply" style="background-color:#F6F2F1;">
                                                                     <div v-if="post.id == reply.post_id">
                                                                         <div v-if="reply.comment_id == comment.id">
                                                                             <div class="avatar mr-50" style="float: left;">
@@ -255,7 +255,7 @@
                                                                                         <img v-if="reply.user_id==img.user_id" :src="img.profileimg" alt="Avatar" style="height:25px;width:25px;object-fit:cover;">
                                                                                     </span>
                                                                             </div>
-                                                                            <div class="user-page-info" >
+                                                                            <div class="user-page-info" style="margin-left:10px;padding: 5px 5px;" >
                                                                                 <span v-for="user in users.data" :key="user">
                                                                                     <h6 class="mb-0" v-if="reply.user_id==user.id">{{user.first_name}} {{user.last_name}}</h6>
                                                                                 </span>
@@ -268,20 +268,12 @@
                                                                     
                                                                 </div>                                                                
                                                             </span>
-                                                              <textarea v-if="seen" style="margin-left:20px;    display: inline-block;" class="form-control" id="label-textarea"  rows="1" placeholder="Reply" v-model="reply"></textarea>
-                                                            <button v-if="seen" style="margin-left:20px;" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
+                                                              <textarea style="margin-left:20px;    display: inline-block;" class="form-control" id="label-textarea"  rows="1" placeholder="Reply" v-model="reply"></textarea>
+                                                            <button style="margin-left:20px;" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
                                                         
                                                             
                                                     </div>
                                                 
-                                                <div class="ml-auto cursor-pointer" style="margin-block-end: auto;">
-                                                    <i class="fa fa-reply" aria-hidden="true"></i>
-                                                    <span v-on:click="seen =! seen" style="font-size:12px;padding-right:20px;padding-left:5px"> replies</span>
-                                                        
-                                                        
-                                                        
-                                                    
-                                                </div>
                                             </div>
                                         </div>
                                        
