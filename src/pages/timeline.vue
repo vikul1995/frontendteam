@@ -142,9 +142,15 @@
                                             </div>
                                             
                                             <div class="ml-auto user-like">
-                                                <button id="show-modal"  style="background-color:white;color:black;">
-                                                <i class="fa fa-edit" style="font-size:20px"></i></button>
                                                 
+
+                                                <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon rounded-circle btn-xs" style=""><i class="fa fa-edit"></i></button>
+
+                                                <div id="id01" class="modal">
+                                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                                <p>My namdjbbd j </p>
+                                                </div>
+
                                                 
                                             </div>
                                          
@@ -247,7 +253,7 @@
                                                         
                                                           <span>
                                                             
-                                                                <div v-for="reply in replies.data" :key="reply" style="background-color:#F6F2F1;">
+                                                                <div v-for="reply in replies.data" :key="reply" style="background-color:#F6F2F1;margin:10px;border-radius:10px">
                                                                     <div v-if="post.id == reply.post_id">
                                                                         <div v-if="reply.comment_id == comment.id">
                                                                             <div class="avatar mr-50" style="float: left;">
