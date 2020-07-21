@@ -3,7 +3,12 @@ import Router from "vue-router";
 import timeline from "@/pages/timeline";
 import Equipments from "@/pages/Equipments";
 import profileTimeline from "@/pages/profileTimeline";
-import profile from "@/pages/profile"
+import profile from "@/pages/profile";
+import company from "@/pages/company";
+import companydetail from "@/pages/companydetail";
+import postcompany  from "@/pages/postcompany";
+import addcompany  from "@/pages/addcompany";
+import demo1 from "@/pages/demo1";
 
 Vue.use(Router);
 
@@ -43,6 +48,7 @@ export default new Router({
       {
         path: "/profileTimeline",
         name: 'profileTimeline',
+        
         component: profileTimeline
       },
       {
@@ -71,6 +77,31 @@ export default new Router({
         alias: "/api/education",
         name: "educations",
         component: profile
+      },
+	  {
+        path: "/company",
+        name: "company",
+        component: company
+      },
+      {
+        path: "/companydetail",
+        name: "companydetail",
+        component: companydetail
+      },
+      {
+        path: "/postcompany",
+        name: "postcompany",
+        component: postcompany
+      },
+      {
+        path: "/addcompany",
+        name: "addcompany",
+        component: addcompany
+      },
+	  {
+        path: "/demo1",
+        name: "demo1",
+        component: demo1
       },
     ]
 })

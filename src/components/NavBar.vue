@@ -101,7 +101,9 @@
                                 </div>
                                 <div>
                                     <span><a href="/profileTimeline">
-                                    <img   class="round" src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avatar" height="40" width="40" style="object-f"></a>
+                                    
+                                    <img  v-if="image.user_id==user.id" class="round" :src="image.profileimg" alt="avatar" height="40" width="40" style="object-f"></a>
+                                    
                                     </span>
                                 </div>
                             </a>
@@ -124,7 +126,7 @@ import DataService from "../services/DataService"
 export default {
     data(){
         return {
-           profileImages:[],
+           image:[],
            user:[],
         }
     },
@@ -135,12 +137,11 @@ export default {
           console.log(response.data.user);
           console.log(this.user.dob);
       })
-      
-     
-      DataService.getAllProfileImages()
+      DataService.getimage()
       .then(response=>{
-          this.profileImages = response.data;
+          this.image = response.data;
           console.log(response.data);
+          console.log(this.image.user_id);
       })
       .catch(e => {
           console.log(e);

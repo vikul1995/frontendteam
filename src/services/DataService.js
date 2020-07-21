@@ -147,11 +147,11 @@ class DataService {
   getexperiences(){
     return http.get("./api/experiences");
     
-    }
-    updateexp(id,data) {
-      return http.put(`./api/experiences/${id}?${data}`);
+  }
+  updateexp(id,data) {
+        return http.put(`./api/experiences/${id}?${data}`);
     
-    }
+  }
     getimage()
     {
       return http.get("./api/profileimg");
@@ -171,14 +171,14 @@ class DataService {
   geteducation() {
     return http.get("./api/education");
     
-    }
-    updateedu(id,data) {
+  }
+  updateedu(id,data) {
       return http.put(`./api/education/${id}?${data}`);
     
-    }
+  }
     
   getProfile(){
-    return http.get("./api/profiles",);
+    return http.get("./api/profiles");
   }
 
 }

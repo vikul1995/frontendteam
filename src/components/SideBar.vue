@@ -29,7 +29,7 @@
                 </li>
                 <li class=" nav-item"><a href="/Posts"><i class="feather icon-help-circle"></i><span class="menu-title" data-i18n="FAQ">Post Ads</span></a>
                 </li>
-                <li class=" nav-item"><a href="/Company"><i class="feather icon-help-circle"></i><span class="menu-title" data-i18n="FAQ">Companies</span></a>
+                <li class=" nav-item"><a href="/company"><i class="feather icon-help-circle"></i><span class="menu-title" data-i18n="FAQ">Companies</span></a>
                 </li>
                 <li class=" nav-item"><a href="/postad"><i class="feather icon-help-circle"></i><span class="menu-title" data-i18n="FAQ">Blogs</span></a>
                 </li>

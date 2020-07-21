@@ -13,6 +13,7 @@
     "es6-promise": "^4.2.8",
     "eslint-plugin-disable": "^2.0.1",
     "google-fonts-webpack-plugin": "^0.4.4",
+    "ignore-emit-webpack-plugin": "^2.0.2",
     "jquery": "^3.5.1",
     "pace": "0.0.4",
     "popper.js": "^1.16.1",
