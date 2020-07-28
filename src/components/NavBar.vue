@@ -102,7 +102,7 @@
                                 <div>
                                     <span><a href="/profileTimeline">
                                     
-                                    <img  v-if="image.user_id==user.id" class="round" :src="image.profileimg" alt="avatar" height="40" width="40" style="object-f"></a>
+                                    <img class="round" :src="image.profileimg" alt="avatar" style="width:40px;height:40px;object-fit:cover"></a>
                                     
                                     </span>
                                 </div>
@@ -111,8 +111,8 @@
 								<a class="dropdown-item" href="/profile"><i class="feather icon-user"></i> Edit Profile</a>
 								<a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a>
 								<a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-								<a class="dropdown-item" href="/Posts"><i class="feather icon-message-square"></i> Post Ads</a>
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="auth-login.html"><i class="feather icon-power"></i> Logout</a>
+								<a class="dropdown-item" href="/postad"><i class="feather icon-message-square"></i> Post Ads</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="/"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
                     </ul>
@@ -134,21 +134,15 @@ export default {
          DataService.getUser()
       .then(response=>{
           this.user = response.data.user;
-          console.log(response.data.user);
-          console.log(this.user.dob);
       })
-      DataService.getimage()
+      DataService.getpic()
       .then(response=>{
-          this.image = response.data;
-          console.log(response.data);
-          console.log(this.image.user_id);
+          this.image = response.data.data;
       })
       .catch(e => {
           console.log(e);
         });
-    }
-
-   
+    }   
 }
 </script>
 

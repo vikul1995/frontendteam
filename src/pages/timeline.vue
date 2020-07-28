@@ -7,7 +7,7 @@
             <div class="content-body">
                 <div id="user-profile">
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-md-9">
                             
 								<div class="central-meta">
                                     <div class="new-postbox">
@@ -36,7 +36,7 @@
                                                         
                                                         <li>
                                                             <div style="position: relative; overflow: hidden; display: inline-block;"> 
-                                                            <i class="fa fa-image cursor-pointer"></i>
+                                                            <i class="fa fa-image"></i>
                                                             
                                                                 <input style="font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0;" type="file" data-toggle="tooltip" title="" name="uploadfile" id="post_image" accept="image/*" data-original-title="Image">
                                                             </div>
@@ -70,10 +70,10 @@
                                 </div>
 							
                         </div>
-                        <div class="col-3">
-                            <div class="card">
+                        <div class="col-md-3">
+                            <div class="card" style="box-shadow:none">
                                     
-                                    <div class="card-body">
+                                    <div class="card-body" style="height:170px">
 										
                                         Advertisement
                                         
@@ -88,18 +88,35 @@
                                 
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
-                                        <h4>People you may know</h4>
-                                        <i class="feather icon-more-horizontal cursor-pointer"></i>
+                                        <h4 align="center">People you may know</h4>
+                                        
                                     </div>
+
                                     <div class="card-body">
                                         <div class="d-flex justify-content-start align-items-center mb-1" v-for="user in users.data" :key="user">
-                                            <div class="avatar mr-50 "><div v-for="img in profileImages.data" :key="img">
-                                                    <img v-if="img.user_id==user.id" :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
-                                            </div></div>
+                                            <div class="avatar mr-50 ">
+                                               <div v-for="img in profileImages.data" :key="img"> 
+                                                    <span v-if="img.user_id==user.id">
+                                                        <img :src="img.profileimg" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
+                                                    </span>
+                                                    
+                                                </div>
+                                                <!--<span v-if="img.profileimg==null">
+                                                        <img src="../app-assets/dp.png" alt="defalut image" style="border-radius:50%;height:35px;width:35px;object-fit:cover;">
+                                                    </span>-->
+                                                <div v-for="img in pic" :key="img"> 
+                                                    <span v-if="img==user.id">
+                                                        <img src="../app-assets/dp.png" alt="avtar img holder" style="height:35px;width:35px;object-fit:cover;">
+                                                    </span>
+                                                    
+                                                </div>
+                                            </div>
+                                            
                                             <div class="user-page-info">
                                                 <h6 class="mb-0">{{user.first_name}} {{user.last_name}}</h6>
                                                 <span class="font-small-2">6 Mutual Friends</span>
                                             </div>
+
                                             <button type="button" class="btn btn-primary btn-icon ml-auto"><i class="feather icon-user-plus"></i></button>
                                         </div>
                                         
@@ -118,7 +135,10 @@
                                             <div class="user-page-info">
                                                 <p>{{company.name}}</p>  
                                             </div>
-                                            <div class="ml-auto"><i class="feather icon-star"></i></div>
+                                            <div class="ml-auto">
+                                                <i @click="followCompany(company.id)" onMouseOver="this.style.color='red'" 
+                                                onMouseOut="this.style.color='grey'" class="feather icon-star"></i>
+                                            </div>
                                         </div>    
                                     </div>
                                 </div>
@@ -137,48 +157,94 @@
                                                 <div v-for="user in users.data" :key="user">
                                                     <p class="mb-0"  v-if="post.user_id==user.id">{{user.first_name}} {{ user.last_name}}</p>
                                                 </div>
-                                                <p class="mb-0"> {{post.designation}}</p>
+                                                <p class="font-small-2" v-if="post.user_id==prof.user_id" style="margin:0px"> {{prof.designation}}</p>
                                                 <span class="font-small-2">Published at: {{post.created_at}}</span>
+                                                
                                             </div>
                                             
-                                            <div class="ml-auto user-like">
+                                            <div class="ml-auto user-like" style="position:relative">
+                                                <button class="btn btn-icon rounded-circle btn-xs" @click="editPost(post.id)">
+                                                    <i class="fa fa-edit" style="color:black;background:white"></i>
+                                                </button>    
                                                 
+                                                    <div :id="post.id" class="modal" style="position:absolute;width:15rem;height:15rem;margin-top:3rem;margin-left: -12rem;">
+                                                        <form class="modal-content" style="padding:2rem:position:relative;border:solid 1px grey;border-radius: 0.6rem 0 0.6rem 0.6rem;">
 
-                                                <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon rounded-circle btn-xs" style=""><i class="fa fa-edit"></i></button>
+                                                            <button @click="deletePost">Delete Post</button>
 
-                                                <div id="id01" class="modal">
-                                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-                                                <p>My namdjbbd j </p>
-                                                </div>
-
+                                                            <button type="button" @click="closeButton(post.id)" class="close" style="top:0.2rem;right:1rem">&times;</button>
+                                                             
+                                                            <button @click="editPostButton(post.id +1)" class="btn btn-icon rounded-circle btn-xs" style="">Edit Post</button>
+                                                            
+                                                                <div :id="post.id + 1" class="modal">
+                                                                    <form class="modal-content"  style="margin-top: 5%;width:40%; height:auto; Position:relative;">
+                                                                        <span onclick="document.getElementById('id01').style.display='none'" style="right:1rem;top:1rem" class="close" title="Close Modal">&times;</span>
+                                                                
+                                                                        <div class="d-flex justify-content-start align-items-center mb-1">
+                                                                            <div v-for="img in profileImages.data" :key="img">
+                                                                                <div class="avatar mr-1"  v-if="img.user_id==post.user_id">
+                                                                                    <img :src="img.profileimg" alt="avtar img holder" style="height:45px;width:45px;object-fit:cover;">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="user-page-info">
+                                                                                <div v-for="user in users.data" :key="user">
+                                                                                    <p class="mb-0"  v-if="post.user_id==user.id">{{user.first_name}} {{ user.last_name}}</p>
+                                                                                </div>
+                                                                                <p class="font-small-2" v-if="post.user_id==prof.user_id" style="margin:0px"> {{prof.designation}}</p>
+                                                                                <span class="font-small-2">Published at: {{post.created_at}}</span>
+                                                                                
+                                                                                
+                                                                            </div>
+                                                                            
+                                                                        </div>
+                                                                        
+                                                                        <textarea v-model="post.description" id="postDescription" name="description" style="border-bottom: 1px solid #eeeeee;margin-bottom: 1rem;"/>
+                                                                        <div >
+                                                                            <div v-if="post.Images.length==1">
+                                                                                <div style="position:relative">
+                                                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="" :src="post.Images[0].uploadfile" alt="avtar img holder">
+                                                                                    <button class="btn" id="picDelete" style=" position: absolute;top: 1rem;
+                                                                                    right: 1rem;background-color: #555;color: white;font-size: 30px;padding: 5px 12px;border: none;cursor: pointer;border-radius: 50%;text-align: center;">&times;</button>
                                                 
+                                                                                </div>
+                                                                            </div>
+                                                        
+                                            
+                                                                            
+                                                                        </div>
+                                                                        <button type="button" @click="saveChanges(post.id)" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">Save Changes</button>
+                                                                    </form>
+                                                                </div>
+                                                            
+                                                        </form>    
+                                                    </div>
                                             </div>
                                          
                                         </div>
                                         <p>{{post.description}}</p> 
                                         <div >
                                             <div v-if="post.Images.length==1">
-                                            <div style="height:300px; width:100%; border-style:solid">
-                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:300px;width:540px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
+                                                <div style="">
+                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                         
                                                 </div>
-                                        </div>
+                                             </div>
                                     
                                         <div v-if="post.Images.length==2">
-                                           <div style="height:300px; width:400px; border-style:solid">
+                                           <div style="height:300px; width:400px;">
                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:290px;width:190px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:290px;width:200px;" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                             </div>
                                         </div>
                                          <div v-if="post.Images.length==3">
-                                           <div style="height:300px; width:400px; border-style:solid">
+                                           <div style="height:300px; width:400px;">
                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:190px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:190px;" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:140px;width:400px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
                                             </div>
                                         </div>
                                         <div v-if="post.Images.length==4">
-                                              <div style="height:300px; width:300px; border-style:solid">
+                                              <div style="height:300px; width:300px;">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
@@ -186,7 +252,7 @@
                                                </div>
                                         </div>
                                         <div v-if="post.Images.length==5">
-                                              <div style="height:300px; width:300px; border-style:solid">
+                                              <div style="height:300px; width:300px;">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
@@ -204,8 +270,7 @@
                                       </div>
                                    </div>
                                   
-                                 <div style="height:40px; width:400px;">
-                                 </div>
+                                 
                                        
                                         </div>
 
@@ -215,7 +280,8 @@
                                       
                                         <div class="d-flex justify-content-start align-items-center mb-1">
                                             <div class="d-flex align-items-center">
-                                                <i  id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50 cursor-pointer fa-3x" ></i>
+                                                <i onMouseOut="this.style.color='grey'" onMouseOver="this.style.color='blue'" 
+                                                id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50 cursor-pointer fa-3x" ></i>
                                                 <span>{{post.likecount}}</span>
                                             </div>
                                             <div class="ml-2">
@@ -274,8 +340,8 @@
                                                                     
                                                                 </div>                                                                
                                                             </span>
-                                                              <textarea style="margin-left:20px;    display: inline-block;" class="form-control" id="label-textarea"  rows="1" placeholder="Reply" v-model="reply"></textarea>
-                                                            <button style="margin-left:20px;" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
+                                                              <textarea style="margin-left:20px;display: inline-block;" class="form-control" :id="comment.id" rows="1" placeholder="Reply" name="reply" required="required"></textarea>
+                                                            <button style="margin-left:20px;" type="submit" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
                                                         
                                                             
                                                     </div>
@@ -284,7 +350,7 @@
                                         </div>
                                        
                                         <fieldset class="form-label-group mb-50">
-                                            <textarea class="form-control" id="label-textarea" rows="2"  placeholder="Add Comment" v-model="comment"></textarea>
+                                            <textarea class="form-control" id="label-textarea" rows="2" placeholder="Add Comment" v-model="comment" required="required"></textarea>
                                             <label for="label-textarea">Add Comment</label>
                                         </fieldset>
                                         <button type="button" class="btn btn-sm btn-primary" @click="postComment(post.id)">Post Comment</button>
@@ -345,6 +411,8 @@ export default {
   data() {
       
        return {
+           count: '',
+           pic: [],
            seen: false,
            modalOpen: false,
            replies: [],
@@ -358,6 +426,7 @@ export default {
            like: '',
            user:'',
            company:'',
+           description: '',
            post: {
                 name: '',
                 description: '',
@@ -368,61 +437,137 @@ export default {
                 message:''
       };
   },
-  created() {
-      DataService.getAllProfileImages()
-      .then(response=>{
-          this.profileImages = response.data;
-          console.log(response.data);
-      })
-      DataService.getAllCompany()
-      .then(response=>{
-          this.companies = response.data;
-          console.log(response.data);
-      })
-      .catch(e => {
-          console.log(e);
-        });
-      DataService.getUsers()
-      .then(response=>{
-          this.users = response.data;
-          console.log(response.data);
-      })
-      .catch(e => {
-          console.log(e);
-        });
-       DataService.getAll()
+  async created() {
+      await DataService.getProfile()
         .then(response => {
-          this.posts = response.data;
-          console.log(response.data);
+          this.prof = response.data.data;
+          
         })
         .catch(e => {
           console.log(e);
         });
-        DataService.getAllComments()
+
+      await DataService.getAllProfileImages()
+      .then(response=>{
+          this.profileImages = response.data;
+          
+      })
+      await DataService.getAllCompany()
+      .then(response=>{
+          this.companies = response.data;
+      })
+      .catch(e => {
+          console.log(e);
+        });
+      await DataService.getUsers()
+      .then(response=>{
+          this.users = response.data;
+          
+      })
+      .catch(e => {
+          console.log(e);
+        });
+       await DataService.getAll()
+        .then(response => {
+          this.posts = response.data;
+          
+
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        await DataService.getAllComments()
                         .then(response => {
                         this.comments = response.data;
-                        console.log(response.data);
-                        console.log(this.comment);
-                        console.log("get comments");
                         
                         })
                         .catch(e => {
                         console.log(e);
                         });
-        DataService.getAllReply()
+        await DataService.getAllReply()
             .then(response=>{
                 this.replies = response.data;
-                console.log(response.data);
-                console.log(this.replies);
             })
             .catch(e => {
                 console.log(e);
             })
+            
+            
+            console.log("checking..");
+            for(var i=0;i<this.users.data.length;i++)
+            {
+                this.count=0;
+                
+                for(var j=0;j<this.profileImages.data.length;j++)
+                {
+                    
+                   if(this.users.data[i].id==this.profileImages.data[j].user_id)
+                   {
+                       
+                        this.count=1; 
+                        
+                   }
+                    
+                }
+                if(this.count==0)
+                {
+                    this.pic.push(this.users.data[i].id);
+                    
+                } 
+                       
+            }
+            console.log(this.pic);
+            
     },
      
 
            
   methods: {
+      editPostButton(id){
+          document.getElementById('id01').style.display='block'
+      },
+      closeButton(id){
+          document.getElementById(id).style.display='none'
+      },
+      editPost(id){
+          document.getElementById(id).style.display ='block'
+      },
+      deletePost(){
+        DataService.deletePost(id)
+          .then(response=>{
+              alert("successfully deleted");
+          })
+          .catch(e=>{
+              console.log(e);
+              this.message="Invalid Credentials "
+          });
+      },
+      followCompany(id){
+          var fc=new FormData();
+          fc.append("company_id", id);
+
+          DataService.followCompany(fc)
+          .then(response=>{
+              alert("Like");
+          })
+          .catch(e=>{
+              console.log(e);
+              this.message="Invalid Credentials "
+          }); 
+      },
+      saveChanges(id){
+                event.preventDefault();
+                const params = new URLSearchParams();
+                params.append("description",document.getElementById("postDescription").value);
+                
+                DataService.postUpdate(id,params)
+                    
+                .catch(e=>{
+                console.log(e);
+                this.message="Invalid"
+          });
+      },
       openModal() {
             this.modalOpen = !this.modalOpen;
         },
@@ -475,14 +620,15 @@ export default {
               this.message="Invalid Credentials "
           });
       },
+      
       sendReply(comment_id, id){
+          event.preventDefault();
           var sr= new FormData();
           sr.append("comment_id", comment_id);
           sr.append("post_id", id);
+          this.reply=document.getElementById(comment_id).value;
           sr.append("reply", this.reply);
-
-          console.log(sr);
-          console.log("reply");
+          
           DataService.createReply(sr)
           .then(response=>{
                         //this.post.id=response.data.id;
@@ -553,6 +699,32 @@ export default {
 }
 </script>
 <style>
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+
 .dropdown-content {
   display: none;
   position: absolute;
@@ -570,6 +742,5 @@ export default {
 }
 
 .show {display: block;}
-
 
 </style>

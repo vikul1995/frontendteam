@@ -6,25 +6,24 @@ class DataService {
   }  
 
   create(data) {
-    console.log ('create DataService');
     return http.post("./api/posts",data);
   }
   getAll() {
-    console.log ('create DataService');
+    
     return http.get("/api/posts");
   }
   get(user_id) {
     return http.get(`/posts/${user_id}`);
   }
   getAllUser() {
-    console.log ('create DataService');
+    
     return http.get("/api/users");
   }
   login(formData){
     return http.post("./api/login",formData);
   }
   company(data) {
-    console.log ('create DataService');
+    
     return http.post("./api/company",data);
   }
   getAllService() {
@@ -116,10 +115,9 @@ class DataService {
   }
 
   getAllProfileImages(){
-    return http.get("./api/profileimg");
+    return http.get("./api/profilepic");
   }
   profile(data) {
-    console.log ('create DataService');
     return http.post("./api/profiles", data);
   
   }
@@ -152,16 +150,15 @@ class DataService {
         return http.put(`./api/experiences/${id}?${data}`);
     
   }
-    getimage()
-    {
-      return http.get("./api/profileimg");
+   
+  getpic(){
+    return http.get("./api/profileimg");
     
-    }
-    postimage(data)
-    {
-      return http.post("./api/profileimg",data);
+  }
+  postimage(data){
+    return http.post("./api/profileimg",data);
     
-    }
+  }
     
   education(data) {
   return http.post("./api/education",data);
@@ -180,7 +177,15 @@ class DataService {
   getProfile(){
     return http.get("./api/profiles");
   }
-
+ postUpdate(id, data){
+    return http.put(`./api/posts/${id}?${data}`);
+  }
+  followCompany(data){
+    return http.post("./api/follow",data);
+  }
+  deletePost(id){
+    return http.delete(`/api/posts/${id}`);
+}
 }
 
 export default new DataService();

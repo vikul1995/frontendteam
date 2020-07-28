@@ -1,13 +1,10 @@
 <template>
-
- <div id="app" style="float:right">
+ <div id="maindiv" style="padding-top: 0;color: #6c757d;line-height:1.5;font-family:sans-serif;box-sizing:border-box;">
             <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>  
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav" style="margin-left: 260px;
-    margin-top: 85px;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav" style="font-family: sans-serif;font-size: 18px;">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
-                <span class="d-block d-lg-none">{{user.first_name}} {{user.last_name}}</span>
-                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" :src="image.profileimg" alt="" /></span>
+                <span class="d-block d-lg-none">{{user.first_name}} {{user.middle_name}} {{user.last_name}}</span>
+                <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" :src="image.profileimg" alt="profilepic" style="width:10rem;height:10rem;object-fit:cover;"/></span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -24,14 +21,15 @@
         <!-- Page Content-->
         <div class="container-fluid p-0">
             <!-- About-->
-            <section class="resume-section" id="about" style="padding-top:100px">
+            <section class="resume-section" id="about">
                 <div class="resume-section-content">
                   <div class="float-right">
                                         <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;"><i class="feather icon-edit-2"></i></button>
 
                                           <div id="id01" class="modal">
-                                            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                                             <form class="modal-content" id="profile" style="overflow-y: scroll; width:50%; height:90%; Position:relative;">
+                                              <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                            
                                               <div class="container">
                                                 <h1>Edit Intro</h1>
                                               <hr>
@@ -80,9 +78,9 @@
                     </div>
                     <h1 class="mb-0">
                         {{prof.first_name}}  {{prof.middle_name}}
-                        <span class="text-primary">{{user.last_name}}</span>
+                        <span class="text-primary">{{prof.last_name}}</span>
                     </h1>
-                    
+                    <p style="font-size:20px"><strong>{{prof.designation}}</strong></p>
 
                     <div class="subheading mb-5">
                         {{prof.address}} - {{prof.postal_code}}, {{prof.mobile_no}} ·
@@ -95,9 +93,8 @@
             <!-- Experience-->
             <section class="resume-section" id="experience">
                 <div class="resume-section-content">
-                  
                     <h2 class="mb-5">Experience</h2>
-                                              
+                                          
                     <div class="d-flex flex-column flex-md-row justify-content-between mb-5" v-for="exp in exps.data" :key="exp">
                         <div class="flex-grow-1">
                             <h3 class="mb-0">{{exp.position}}</h3>
@@ -106,32 +103,30 @@
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">{{exp.from}} - {{exp.to}}</span></div>
                         <div class="float-right" style="padding:20px">
-                                           <button onclick="document.getElementById('id03').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;"><i class="feather icon-edit-2"></i></button>
-
+                                           <button @click="editExp(exp.id)" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;"><i class="feather icon-edit-2"></i></button>
+                                            
                                             <div id="id03" class="modal">
-                                              <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
                                               <form class="modal-content" id="exp" style="overflow-y: scroll; width:50%; height:90%; Position:relative;" >
+                                                <span onclick="document.getElementById('id03').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                              
                                                 <div class="container">
-                                                <h1>Add Experience</h1>
+                                                <h2 align="center">Add Experience</h2>
                                                   <hr>
-                                                    
-                                                  
-                                                    
-                                                    
-                                                  <label for="Title "><b>Position *</b></label>
+ 
+                                                  <label for="Title "><b>Position </b></label>
                                                   <input type="text" class="form-control" placeholder=""  required v-model="experiences.position" name="position" >
 
                                                 
-                                                    <label for="Company"><b>Company * </b></label>
+                                                    <label for="Company"><b>Company </b></label>
                                                   <input type="text" class="form-control" placeholder=""  required v-model="experiences.company" name="company" >
                                                     
-                                                    <label for="Country"><b>Location * </b></label>
+                                                    <label for="Country"><b>Location  </b></label>
                                                   <input type="text"  class="form-control" placeholder=""  required v-model="experiences.location" name="location" >
 
-                                                    <label for=""><b>From * </b></label>
+                                                    <label for=""><b>From  </b></label>
                                                   <input type="date" class="form-control" placeholder=""  required v-model="experiences.from" name="from" >
 
-                                                    <label for=""><b>To *</b></label>
+                                                    <label for=""><b>To </b></label>
                                                   <input type="date"  class="form-control" placeholder=""  required v-model="experiences.to" name="to" >
 
                                                   
@@ -139,15 +134,56 @@
                                                     <hr>
                                                     
                                                     <div class="clearfix">
-                                                
-                                                    <button type="submit" @click="saveExp($event)" class="signupbtn">Add</button>
+                                                    <button type="submit" @click="saveExp($event)" class="signupbtn">Save Changes</button>
                                                   </div>
                                                     
                                                 </div>
                                               </form>
                                             </div>
                                         </div>
+                                        
                     </div>
+
+
+                    <div class="float-right" style="padding:20px">
+                    <button onclick="document.getElementById('id07').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1;"><i class="fa fa-plus" aria-hidden="true"></i>  </button>  
+                    <div id="id07" class="modal">
+                                              <form class="modal-content" id="addexp" style="overflow-y: scroll; width:50%; height:90%; Position:relative;">
+                                                <span onclick="document.getElementById('id07').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                              
+                                                <div class="container">
+                                                <h2 align="center">Add New Experience</h2>
+                                                  <hr>
+ 
+                                                  <label for="Title "><b>Position </b></label>
+                                                  <input type="text" class="form-control" placeholder=""  required v-model="experiences.position" name="position" >
+
+                                                
+                                                    <label for="Company"><b>Company </b></label>
+                                                  <input type="text" class="form-control" placeholder=""  required v-model="experiences.company" name="company" >
+                                                    
+                                                    <label for="Country"><b>Location  </b></label>
+                                                  <input type="text"  class="form-control" placeholder=""  required v-model="experiences.location" name="location" >
+
+                                                    <label for=""><b>From  </b></label>
+                                                  <input type="date" class="form-control" placeholder=""  required v-model="experiences.from" name="from" >
+
+                                                    <label for=""><b>To </b></label>
+                                                  <input type="date"  class="form-control" placeholder=""  required v-model="experiences.to" name="to" >
+
+                                                  
+
+                                                    <hr>
+                                                    
+                                                    <div class="clearfix">
+                                                    <button type="submit" @click="addExp($event)" class="signupbtn">Add New</button>
+                                                  </div>
+                                                    
+                                                </div>
+                                              </form>
+                        </div>
+                  </div>  
+                  
                     
                 </div>
             </section>
@@ -157,158 +193,61 @@
                 <div class="resume-section-content">
                   
                     <h2 class="mb-5">Education</h2>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5" >
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5" v-for="education in educations.data" :key="education">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">{{educations.school}}</h3>
-                            <div class="subheading mb-3">{{educations.degree}}</div>
-                            <div>{{educations.field_of_study}}</div>
-                            <p>{{educations.activities_and_societies}}</p>
+                            <h3 class="mb-0">{{education.school}}</h3>
+                            <div class="subheading mb-3">{{education.degree}}</div>
+                            <div>{{education.field_of_study}}</div>
+                            <p>{{education.activities_and_societies}}</p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">{{educations.start_year}} - {{educations.start_year}}</span></div>
-                        <div class="float-right" style="padding:20px">
-                    <button onclick="document.getElementById('id04').style.display='block'" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;">  <i class="feather icon-edit-2"></i></button>
-                    <div id="id04" class="modal">
-                      <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
-                      <form class="modal-content" id="education" style="overflow-y: scroll; width:50%; height:90%; Position:relative;" >
-                        <div class="container">
-                          <h1>Education</h1>
-                        <hr>
-                            
-                          <label for="School"><b>School </b></label>
-                          <input type="text" class="form-control" placeholder="" v-model="education.school" name="school">
-
-                          <label for="Degree"><b>Degree *</b></label>
-                          <input type="text" class="form-control" placeholder="" v-model="education.degree" name="degree">
-                            
-                            <label for="Field "><b>Field * </b></label>
-                          <input type="text" class="form-control" placeholder="" v-model="education.field_of_study" name="field_of_study">
-                            
-                            <label for="end_year"><b>Form * </b></label>
-                          <input type="date" class="form-control" placeholder="" v-model="education.start_year" name="start_year">
-
-                            <label for="end_year"><b>To *</b></label>
-                          <input type="date" class="form-control" placeholder="" v-model="education.end_year " name="end_year">
-                    <br>
-                            <label for="Activities and societies"><b>Activities and societies * </b></label>
-                          <input type="text"  class="form-control" placeholder="" v-model="education.activities_and_societies" name="activities_and_societies" >
-                          
-
-
-
-                            
-                            <hr>
-                            
-                            <div class="clearfix">
                         
-                            <button type="submit" @click="saveEdu($event)" class="signupbtn">Add</button>
-                          </div>
-                            
-                        </div>
-                      </form>
-                    </div>
-                                   
+                        <div class="flex-shrink-0"><span class="text-primary">{{education.start_year}} - {{education.start_year}}</span></div>
+                        <div class="float-right" style="padding:20px">
+                            <button onclick="editEdu(education.id)" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1" style="width:auto;">  <i class="feather icon-edit-2"></i></button>
+                            <div id="id04" class="modal">
+                              <span onclick="document.getElementById('id04').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                <form class="modal-content" id="education" style="overflow-y: scroll; width:50%; height:90%; Position:relative;" >
+                                  <div class="container">
+                                    <h1>Education</h1>
+                                  <hr>
+                                    
+                                  <label for="School"><b>School </b></label>
+                                  <input type="text" class="form-control" placeholder="" v-model="education.school" name="school">
+
+                                  <label for="Degree"><b>Degree *</b></label>
+                                  <input type="text" class="form-control" placeholder="" v-model="education.degree" name="degree">
+                                    
+                                  <label for="Field "><b>Field * </b></label>
+                                  <input type="text" class="form-control" placeholder="" v-model="education.field_of_study" name="field_of_study">
+                                    
+                                  <label for="end_year"><b>Form * </b></label>
+                                  <input type="date" class="form-control" placeholder="" v-model="education.start_year" name="start_year">
+
+                                  <label for="end_year"><b>To *</b></label>
+                                  <input type="date" class="form-control" placeholder="" v-model="education.end_year " name="end_year">
+                                  
+                                  <br>
+                                  <label for="Activities and societies"><b>Activities and societies * </b></label>
+                                  <input type="text"  class="form-control" placeholder="" v-model="education.activities_and_societies" name="activities_and_societies" >
+     
+                                  <hr>
+                                    
+                                  <div class="clearfix">
+                                
+                                  <button type="submit" @click="saveEdu($event)" class="signupbtn">Add</button>
+                                </div>
+                                    
+                                </div>
+                              </form>
+                            </div>
+                                          
                   </div>
                     </div>
                     
                 </div>
             </section>
             <hr class="m-0" />
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
-                    <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
-                    </ul>
-                    <div class="subheading mb-3">Workflow</div>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Agile Development & Scrum
-                        </li>
-                    </ul>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Interests-->
-            <section class="resume-section" id="interests">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Interests</h2>
-                    <p>Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber. During the warmer months here in Colorado, I enjoy mountain biking, free climbing, and kayaking.</p>
-                    <p class="mb-0">When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a large amount of my free time exploring the latest technology advancements in the front-end web development world.</p>
-                </div>
-            </section>
-            <hr class="m-0" />
-            <!-- Awards-->
-            <section class="resume-section" id="awards">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Awards & Certifications</h2>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Google Analytics Certified Developer
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            Mobile Web Specialist - Google Certification
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2009
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - University of Colorado Boulder - Adobe Creative Jam 2008 (UI Design Category)
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            2
-                            <sup>nd</sup>
-                            Place - University of Colorado Boulder - Emerging Tech Competition 2008
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            1
-                            <sup>st</sup>
-                            Place - James Buchanan High School - Hackathon 2006
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-trophy text-warning"></i></span>
-                            3
-                            <sup>rd</sup>
-                            Place - James Buchanan High School - Hackathon 2005
-                        </li>
-                    </ul>
-                </div>
-            </section>
+          
         </div>
 </div>        
             
@@ -393,13 +332,11 @@ created() {
         .then(response=>{
           this.user = response.data.user;
           console.log(response.data.user);
-          console.log(this.user.dob);
+          ;
       })
         DataService.getProfile()
         .then(response => {
           this.prof = response.data.data;
-         
-          console.log(response.data.data);
           
         })
         .catch(e => {
@@ -439,10 +376,9 @@ created() {
 
 
 
-               DataService.getimage()
+               DataService.getpic()
                .then(response => {
                 this.image= response.data.data;
-                console.log(this.image);
                
                 })
                   .catch(e => {
@@ -456,6 +392,31 @@ created() {
   },
 
         methods: {
+           addExp(event){
+              event.preventDefault();
+              var formData = new FormData(document.getElementById("addexp"));
+                formData.append("postion" ,this.experiences.position);
+                formData.append("company" , this.experiences.company);
+                formData.append("location" , this.experiences.location);
+                formData.append("from",this.experiences.from);
+                formData.append("to",this.experiences.to);
+             
+              
+                console.log(formData)
+                
+                DataService.experiences(formData)
+                    .then(response=>{
+                        this.experiences=response.data;
+                        console.log(response.data);
+                        this.message="Successfully saved !"
+                        alert("Detail Added");
+                        
+                    })
+                    .catch(e=>{
+                        console.log(e);
+                        this.message="Invalid Credentials "
+                    });
+           },
             saveInfo(event){
                 event.preventDefault();
                  this.id=this.prof.id;
@@ -525,7 +486,10 @@ created() {
                 }
                 },
 
-
+            editExp(id){
+                  document.getElementById('id03').style.display='block'
+                  this.expid = id;
+            },
 
              saveExp(event){
                 event.preventDefault();
@@ -555,7 +519,6 @@ created() {
                     });
                   }
                  else{
-                     this.expid=this.exps.id;
                      
                 const params = new URLSearchParams();
             Array.from(new FormData(document.getElementById("exp")).entries())
@@ -577,7 +540,10 @@ created() {
                 }
 
             },
-
+              editEdu(id){
+                  document.getElementById('id04').style.display='block'
+                  this.educationid = id;
+              },
 
               saveEdu(event){
               
@@ -608,7 +574,7 @@ created() {
                }
                      
               else {
-                  this.educationid=this.education.id;
+                 
                   const params = new URLSearchParams();
                   Array.from(new FormData(document.getElementById("education")).entries())
                   .forEach(element => {
@@ -10538,7 +10504,7 @@ body {
 }
 
 @media (min-width: 992px) {
-  body {
+  #maindiv {
     padding-top: 0;
     padding-left: 17rem;
   }
@@ -10581,8 +10547,8 @@ p.lead {
   #sideNav {
     text-align: center;
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 7rem;
+    left: 19rem;
     display: flex;
     flex-direction: column;
     width: 17rem;
@@ -10646,7 +10612,7 @@ section.resume-section {
   padding-right: 1rem;
   padding-top: 5rem;
   padding-bottom: 5rem;
-  max-width: 75rem;
+  /*max-width: 75rem;*/
 }
 section.resume-section .resume-section-content {
   width: 100%;
@@ -10655,9 +10621,9 @@ section.resume-section .resume-section-content {
 
 @media (min-width: 992px) {
   section.resume-section {
-    padding-left: 3rem;
+    padding-left: 20rem;
     padding-right: 3rem;
-    padding-top: 5rem;
+    padding-top: 7.5rem;
     padding-bottom: 5rem;
   }
 }

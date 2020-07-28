@@ -10,9 +10,7 @@ Vue.use(VuePageTitle, {
   // prefix: 'My App - ',
   prefix: 'EnPNeeds -  '
 })
-
-import './app-assets/vendors/css/vendors.min.css'
-
+import './app-assets/vendors/css/vendors.min.css';
 import './app-assets/css/bootstrap.css'
 import './app-assets/css/bootstrap-extended.css'
 import './app-assets/css/colors.css'
@@ -38,12 +36,7 @@ import './app-assets/css/pages/app-ecommerce-shop.css'
 import './app-assets/css/pages/dashboard-analytics.css'
 import './app-assets/css/pages/card-analytics.css'
 import './app-assets/css/plugins/tour/tour.css'
-
-//import './app-assets/vendors/js/vendors.min.js'
-//import './app-assets/js/scripts/pages/user-profile.js'
-//import './app-assets/js/core/app-menu.js'
-//import './app-assets/js/core/app.js'
-//import './app-assets/js/scripts/components.js'
+import '@/app-assets/css/pages/app-ecommerce-shop.css';
 
 
 import { Map, TileLayer, OsmSource, Geoloc, PointGeom, StyleBox, Feature, IconStyle, TextStyle  } from 'vuelayers'

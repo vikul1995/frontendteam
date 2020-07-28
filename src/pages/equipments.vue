@@ -1,5 +1,4 @@
 <template>
-
 <div id="equipment">
     <!-- BEGIN: Content-->
     <div class="app-content content">
@@ -10,12 +9,12 @@
                 <div class="content-header-left col-md-9 col-12 mb-2">
                     <div class="row breadcrumbs-top">
                         <div class="col-12">
-                            <h2 class="content-header-title float-left mb-0">shop</h2>
+                            <h2 class="content-header-title float-left mb-0"><a href="#">Equipment</a></h2>
+                            
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/timeline">Home</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Equipment
+                                     <li class="breadcrumb-item active"><a href="timeline">Timeline</a>
+                                    <li class="breadcrumb-item active"><a href="#">Equipment</a>
                                     </li>
                                 </ol>
                             </div>
@@ -47,7 +46,7 @@
           <vl-style-text :text="geoData.companyName" font="14px  bold italic large" textAlign="left" style="color: red"></vl-style-text>
         </vl-style-box>
     </vl-feature>
-    
+ 
   </vl-map>
   </div>
             <div class="content-detached content-right">
@@ -62,10 +61,32 @@
                                             <span class="navbar-toggler-icon d-block d-lg-none"><i class="feather icon-menu"></i></span>
                                         </button>
                                         <div class="search-results">
-                                           {{count}} results found
+                                            {{count}} Results Found
                                         </div>
                                     </div>
-                                
+                                    <div class="view-options">
+                                        
+                                        <div class="view-btn-option" style="margin-top:5px">
+                                            
+                                            <button class="btn btn-white view-btn grid-view-btn active">
+                                                <i class="feather icon-grid"></i>
+                                            </button>
+                                            <button class="btn btn-white list-view-btn view-btn">
+                                                <i class="feather icon-list"></i>
+                                            </button>
+                                            <div class="w3-dropdown-hover w3-right">
+                                            <button class="w3-button " style="width:170px;background-color:white;color:#0C1A3F;box-shadow: 5px 5px 5px #AFACA6 ;transition: top ease 0.5s;"><b>Short By</b> <i style="margin-left:15px" class="fa fa-bars">  </i> </button>
+                                            <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="acending">Ads Acending</a>
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="decending">Ads Decending</a>
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="companyasc">Company Acending</a>
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="companydesc">Company Decending</a>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -79,45 +100,83 @@
                     <section id="ecommerce-searchbar">
                         <div class="row mt-1">
                             <div class="col-sm-12">
-                                <div class="search-container">
-                                            <form >
-                                            <input style="width:90%;height:35px" v-model="search" type="text" placeholder="Search.." name="search">
-                                            <button type="submit"  v-on:click="searchdata($event)" style="width:50px;height:35px; background: #ddd; color:black" ><i class="fa fa-search" style="margin-right:30px;" ></i></button>
-                                            </form>
-                                        </div>
-                    
+                                <fieldset class="form-group position-relative">
+                                    <input type="text" class="form-control search-product" id="iconLeft5" placeholder="Search here">
+                                    <div class="form-control-position">
+                                        <i class="feather icon-search"></i>
+                                    </div>
+                                </fieldset>
                             </div>
                         </div>
                     </section>
+                    <!-- Ecommerce Content Section Starts -->
+                    <!-- background Overlay when sidebar is shown  starts-->
+                    <div class="shop-content-overlay"></div>
+                    <!-- background Overlay when sidebar is shown  ends-->
+
+                    <!-- Ecommerce Search Bar Starts -->
+                     
+
                     <!-- Ecommerce Search Bar Ends -->
 
                     <!-- Ecommerce Products Starts -->
-                    <section id="ecommerce-products" class="grid-view">
-                    {{msg}}
-                    <div class="row">
-                   <div v-for="equipment in equipments" :key="equipment" style="width:220px;height:280px;">
-                        <router-link :to="{ name: 'details', params: { id: equipment.id,categoryid:2 } }"> <div class="card ecommerce-card" style="margin-top:10px;width:200px;height:280px;">
-                            <div class="card-content" style="width:160px;height:120px;">
+                  <section id="ecommerce-products" class="grid-view">
+                        <div class="card ecommerce-card" v-for="equipment in equipments" :key="equipment.id">
+                            <router-link :to="{ name: 'details',params:{id:equipment.id,category_name:'Equipments'}}"><div class="card-content">
                                 <div class="item-img text-center">
-
-                                     <figure><span  style=" margin-top: 25px; margin-right: 20px;  margin-left: 20px;" ><img :src="equipment.Images[0].image"  style="margin-top:10px;width: 160px;height:120px;" /></span></figure>
+                                    
+                                        <img class="img-fluid"  :src="equipment.Images[0].image" alt="img-placeholder">
                                 </div>
-                                </div>
-                                <div class="card-body" style="margin-left:10px;width:180px;height:100px;">
-                                   
+                                <div class="card-body">
+                                    <div class="item-wrapper">
+                                        <div class="item-rating">
+                                            <div class="badge badge-primary badge-md">
+                                                <span>4</span> <i class="feather icon-star"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h6 class="item-price">
+                                                
+                                            </h6>
+                                        </div>
+                                    </div>
                                     <div class="item-name">
                                         <a href="app-ecommerce-details.html">{{equipment.name}}</a>
-                                
+                                        <p class="item-company">By <span class="company-name">{{equipment.company}}</span></p>
                                     </div>
                                     <div>
-                                        <p class="item-description">
-                                           {{equipment.discription.slice(0, 70)}}......
+                                        <p class="item-description"
+                                           v-html="equipment.description">
                                         </p>
                                     </div>
                                 </div>
-                        </div></router-link>
+                                <div class="item-options text-center">
+                                    <div class="item-wrapper">
+                                        <div class="item-rating">
+                                            <div class="badge badge-primary badge-md">
+                                                <span>4</span> <i class="feather icon-star"></i>
+                                            </div>
+                                        </div>
+                                        <div class="item-cost">
+                                            <h6 class="item-price">
+                                                
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="cart">
+                                        
+                                   <div  v-for="subcategory in subcategories"  :key="subcategory.id">
+                                      <div  v-if="subcategory.id==equipment.subcategory_id">
+                                       <a style="float:left;margin-top:10px ; margin-left:10px ;font-size:12px;color:white" href=""> Equipments / {{subcategory.subcategory_name}}</a>
+                                    </div>
+                                       
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                             </router-link>
                         </div>
-                        </div>
+                        
                     </section>
                     <!-- Ecommerce Products Ends -->
 
@@ -141,6 +200,8 @@
                             </div>
                         </div>
                     </section>
+                    <!-- Ecommerce Products Ends -->
+
                     <!-- Ecommerce Pagination Ends -->
 
                 </div>
@@ -161,18 +222,32 @@
                         <div class="card">
                             <div class="card-body">
                                
+                                <!-- /Price Range -->
+                          
                                 <!-- Categories Starts -->
                                 <div id="product-categories">
                                     <div class="product-category-title">
                                         <h6 class="filter-title mb-1">Categories</h6>
+                                        <input style="width:80%;height:25px;margin-right:5px" v-on:input="subcategorysearch" autocomplete="off" v-model="search" type="text" placeholder="Search.." name="search">
+                                        
+                                        <div class="w3-dropdown-hover " style="float:right">
+                                            <button class="w3-button " style="width:3px;height:25px;background-color:white;color:white"><i  class="fa fa-bars" style="color:black;width:10px;height:0px">  </i> </button>
+                                            <div class="w3-dropdown-content w3-bar-block w3-border" style="right:0">
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="subcategoryasc">Ads Acending</a>
+                                            <a href="#" class="w3-bar-item w3-button" v-on:click="subcategorydesc">Ads Decending</a>
+                                           
+                                            </div>
+                                            </div>
                                     </div>
-                                    <ul class="list-unstyled categories-list" >
+                                    <hr>
+                                      {{msg}}
+                                    <ul class="list-unstyled categories-list noStyleList"  >
                                     
-                                      <li v-for="subcategory in subcategories" :key="subcategory" > 
+                                       <li v-for="subcategory in subcategories"  :key="subcategory.id" > 
                                             <div >
                                              <span  style="font-size:15px;cursor: pointer;">{{subcategory.subcategory_name}}</span>    
                                             
-                                             <input  style="float:right;transform : scale(1.5); " class="ml-50" type="checkbox" @change="fetchequipmentsData(checked)" name="category-filter" id="checkbox" :value="subcategory.id" v-model="checked" >
+                                             <input  style="float:right;transform : scale(1.5); " class="ml-50" type="checkbox" @change="fetchServicesData(checked)" name="category-filter" id="checkbox" :value="subcategory.id" v-model="checked" >
                                            
                                              </div>
                                              <hr>
@@ -181,7 +256,10 @@
                                       
                                     </ul>
                                 </div>
-                               
+                                <!-- Categories Ends -->
+                                <hr>
+                                <!-- Brands -->
+                                
                                 <!-- Clear Filters Starts -->
                                 <div id="clear-filters">
                                     <button class="btn btn-block btn-primary">CLEAR ALL FILTERS</button>
@@ -205,6 +283,7 @@
 </div>
 </template>
 <script>
+
 import ServicesDataService from "../services/ServicesDataService";
 import EquipmentDataService from "../services/EquipmentDataService";
     export default {
@@ -222,19 +301,27 @@ import EquipmentDataService from "../services/EquipmentDataService";
             zoom: 15,
         center: [73.909382, 18.609025],
         rotation: 0,
-        icon: require('./../app-assets/images/marker.png'),
+        icon: require('../assetsold/marker.png'),
         coordinates:[],
-           
+           equip_id:0,
       };
   },
   
   
  
-  created() {
+  async created() {
+
+
+
+      //  await EnpneedsDb.addNewValue("new key12","Rambha22");
+      //  let value = await EnpneedsDb.readValue("new key122");
+      //  console.log("valueva ="+value);
+      //  console.log("pringed");
+       
 
         ServicesDataService.getsubcategory(2)
         .then(response => {
-          this.subcategories = response.data;
+          this.subcategories =  response.data;
           console.log(response.data);
           
         })
@@ -257,7 +344,7 @@ import EquipmentDataService from "../services/EquipmentDataService";
             for(let i =0;i<(this.equipments).length;i++)
              {
                   
-             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+             let coordinates = [parseFloat(this.equipments[i].longitude),parseFloat(this.equipments[i].latitude)];
                let companyName = this.equipments[i].company;
                let geoData = new GeoData (companyName,coordinates);
                  this.coordinates.push(geoData); 
@@ -269,11 +356,10 @@ import EquipmentDataService from "../services/EquipmentDataService";
           console.log(e);
         });
        
-               
-
   },
    methods: {
      fetchequipmentsData: async function(ids){
+
         document.getElementById("equipment").style.opacity = 0.5;
 
 if(ids.length==0){
@@ -323,7 +409,7 @@ if(ids.length==0){
          for(let i =0;i<(this.equipments).length;i++)
              {
                   
-             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+             let coordinates = [parseFloat(this.equipments[i].longitude),parseFloat(this.equipments[i].latitude)];
                let companyName = this.equipments[i].company;
                let geoData = new GeoData (companyName,coordinates);
                  this.coordinates.push(geoData); 
@@ -362,7 +448,7 @@ if(ids.length==0){
                  for(let i =0;i<(this.equipments).length;i++)
              {
                   
-             let coordinates = [parseFloat(this.equipments[i].longitute),parseFloat(this.equipments[i].latitute)];
+             let coordinates = [parseFloat(this.equipments[i].longitude),parseFloat(this.equipments[i].latitude)];
                let companyName = this.equipments[i].company;
                let geoData = new GeoData (companyName,coordinates);
                  this.coordinates.push(geoData); 
@@ -374,8 +460,132 @@ if(ids.length==0){
         document.getElementById("equipment").style.opacity = 1;
 
              },
+
+      
+        acending:function(){
+            this.equipments=[];
+           EquipmentDataService.getasc()
+        .then(response => {
+          this.equipments = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        },     
+        decending:function(){
+            this.equipments=[];
+           EquipmentDataService.getdesc()
+        .then(response => {
+          this.equipments = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        } ,    
+        companydesc:function(){
+            this.equipments=[];
+           EquipmentDataService.getcompanydesc()
+        .then(response => {
+          this.equipments = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        } ,    
+        companyasc:function(){
+            this.equipments=[];
+           EquipmentDataService.getcompanyasc()
+        .then(response => {
+          this.equipments = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        } ,    
+        subcategoryasc:function(){
+             this.search='';
+            this.subcategories=[];
+           EquipmentDataService.getsubcategoryasc(2)
+        .then(response => {
+          this.subcategories = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        } ,    
+        subcategorydesc:function(){
+             this.search='';
+            this.subcategories=[];
+           EquipmentDataService.getsubcategorydesc(2)
+        .then(response => {
+          this.subcategories = response.data.data;
+          console.log(response.data);
+          
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        } ,   
+        subcategorysearch:function(event){
+            
+           event.preventDefault();
+           
+                var formData = new FormData();
+                formData.append("search" ,this.search);
+                console.log(formData);
+                EquipmentDataService.subcategorysearch(formData,2)
+                    .then(response=>{
+                        if(((response.data).success)==false){
+    
+                        this.subcategories=[];
+                        this.msg="category not available";
+            
+                        }
+                        else{
+                 
+                  this.subcategories=[];
+            
+             this.subcategories=response.data.data;
+             this.msg='';
+             }
+        })
+                    .catch(e=>{
+                        console.log(e);
+                       
+                    });
+        } 
   }
 
   
 };
 </script>
+<style>
+.noStyleList{
+    list-style-type: none;
+}
+ ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: #f2f2f2;
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    ul li:hover ul.dropdown{
+        display: block; /* Display the dropdown */
+    }
+    ul li ul.dropdown li{
+        display: block;
+    }
+
+</style>

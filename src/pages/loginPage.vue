@@ -1,14 +1,13 @@
 <template>
 
-    <div class="app-content content">
+    <div class="app-content content" style="margin:0">
         <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
             </div>
             <div class="content-body">
                 <section class="row flexbox-container">
-                    <div class="col-xl-8 col-11 d-flex justify-content-center">
+                    <div class="col-xl-8 col-11 d-flex justify-content-center" style="margin:auto">
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center px-1 py-0">
@@ -27,7 +26,7 @@
                                                 <form>
                                                     <fieldset class="form-label-group form-group position-relative has-icon-left">
                                                         <input type="text" class="form-control" id="user-name" placeholder="Username" required
-                                                        v-model="user.email" name="email">
+                                                        v-model="user.email" name="email" style="width:100%">
                                                         <div class="form-control-position">
                                                             <i class="feather icon-user"></i>
                                                         </div>
@@ -95,11 +94,11 @@ import DataService from "../services/DataService";
                 var formData = new FormData();
                 formData.append("email" ,this.user.email);
                 formData.append("password" ,this.user.password);
-                console.log(formData)
+                
                 DataService.login(formData)
                     .then(response=>{
                        document.cookie='enpneeds_token='+response.data.token;
-                        console.log(document.cookie);
+                        
                         this.message="Successfully saved !"
                         this.$router.push('/timeline')
                     })

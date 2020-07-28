@@ -7,7 +7,7 @@
                                         <img class="img-fluid bg-cover rounded-0 w-100" src="./../app-assets/images/cover.png" alt="User Profile Image">
                                     </div>
                                     <div class="profile-img-container d-flex align-items-center justify-content-between">
-                                        <img src="../app-assets/images/profile/user-uploads/user-01.jpg" class="rounded-circle img-border box-shadow-1" alt="Card image">
+                                        <img :src="image.profileimg" class="rounded-circle img-border box-shadow-1" alt="Card image">
                                         <div class="float-right">
                                             <button type="button" class="btn btn-icon btn-icon rounded-circle btn-primary mr-1">
                                                 <i class="feather icon-edit-2"></i>
@@ -51,3 +51,22 @@
                         </div>
                     </div>
 </template>
+<script>
+import DataService from "../services/DataService"
+export default {
+  data() {
+      return{
+          image: []
+      }
+  },
+  created(){
+      DataService.getpic()
+      .then(response=>{
+          this.image = response.data.data;
+      })
+      .catch(e => {
+          console.log(e);
+        });
+  }  
+}
+</script>

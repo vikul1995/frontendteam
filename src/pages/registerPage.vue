@@ -1,13 +1,12 @@
 <template>
-    <div class="app-content content">
+    <div class="app-content content" style="margin:0">
         <div class="content-overlay"></div>
-        <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
             <div class="content-header row">
             </div>
             <div class="content-body">
                 <section class="row flexbox-container">
-                    <div class="col-xl-8 col-10 d-flex justify-content-center">
+                    <div class="col-xl-8 col-10 d-flex justify-content-center" style="margin:auto">
                         <div class="card bg-authentication rounded-0 mb-0">
                             <div class="row m-0">
                                 <div class="col-lg-6 d-lg-block d-none text-center align-self-center pl-0 pr-3 py-0">
@@ -26,12 +25,12 @@
                                                 
                                                     <div class="form-label-group">
                                                         <input type="text" id="inputName" class="form-control" placeholder="First Name" required
-                                                        v-model="register.first_name" name="first_name">
+                                                        v-model="register.first_name" name="first_name" style="width: 100%;">
                                                         <label for="inputName">First Name</label>
                                                     </div>
                                                     <div class="form-label-group">
                                                         <input type="text" id="inputName" class="form-control" placeholder="Last Name" required
-                                                        v-model="register.last_name" name="last_name">
+                                                        v-model="register.last_name" name="last_name" style="width: 100%;">
                                                         <label for="inputName">Last Name</label>
                                                     </div>
                                                     <div class="form-label-group">

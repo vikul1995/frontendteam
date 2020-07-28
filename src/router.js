@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import timeline from "@/pages/timeline";
-import Equipments from "@/pages/Equipments";
+import equipments from "@/pages/Equipments";
 import profileTimeline from "@/pages/profileTimeline";
 import profile from "@/pages/profile";
 import company from "@/pages/company";
@@ -9,6 +9,12 @@ import companydetail from "@/pages/companydetail";
 import postcompany  from "@/pages/postcompany";
 import addcompany  from "@/pages/addcompany";
 import demo1 from "@/pages/demo1";
+import services from "@/pages/Services";
+import Supplier from "@/pages/Supplier";
+import Unit_rigs from "@/pages/Unit_rigs";
+//import PostsAd from "@/pages/PostsAd";
+import details from "@/pages/details";
+
 
 Vue.use(Router);
 
@@ -31,10 +37,7 @@ export default new Router({
         },
         component: timeline
       },
-      {
-        path: "/Equipments",
-        component: Equipments
-      },
+      
       {
         path: "/loginPage",
         meta:{layout: "login-register"},
@@ -55,6 +58,7 @@ export default new Router({
         path: "/profile",
         alias: "/api/profiles",
         name: "profile",
+        
         component: profile
       },
       
@@ -103,5 +107,34 @@ export default new Router({
         name: "demo1",
         component: demo1
       },
+      {
+        path: "/services",
+        name: "services",
+        component: services
+      },
+    
+      {
+        path: "/Supplier",
+        name: "Supplier",
+        component:Supplier
+      },
+     {
+        path: "/Unit_rigs",
+        name: "Unit_rigs",
+        component: Unit_rigs
+      },
+      
+      {
+        path: "/equipments",
+        name: "equipments",
+        component: equipments
+      },
+      {
+        path: "/:category_name/details/:id/",
+        name: "details",
+        component: details,
+       
+      },
+      
     ]
 })

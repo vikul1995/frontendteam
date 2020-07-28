@@ -66,45 +66,62 @@
                                 
                             </div>
                             <div class="col-lg-6 col-12">
-                                <div class="card" v-for="post in posts.data.data" :key="post.user_id" :link="post">
+                                <div class="card" v-for="post in posts.data.data" :key="post.user_id" :link="post" >
                                     <div class="card-body" >
                                         <div class="d-flex justify-content-start align-items-center mb-1">
-                                            <div class="avatar mr-1">
-                                                <img src="../app-assets/images/profile/user-uploads/user-01.jpg" alt="avtar img holder" height="45" width="45">
+                                            <div v-for="img in profileImages.data" :key="img">
+                                                <div class="avatar mr-1"  v-if="img.user_id==post.user_id">
+                                                    <img :src="img.profileimg" alt="avtar img holder" style="height:45px;width:45px;object-fit:cover;">
+                                                </div>
                                             </div>
                                             <div class="user-page-info">
-                                                <div>
-                                                <p class="mb-0" >{{user.first_name}} {{ user.last_name}}</p>
+                                                <div v-for="user in users.data" :key="user">
+                                                    <p class="mb-0"  v-if="post.user_id==user.id">{{user.first_name}} {{ user.last_name}}</p>
                                                 </div>
-                                                <p class="mb-0">{{post.designation}}</p>
+                                                <p class="mb-0"> {{post.designation}}</p>
                                                 <span class="font-small-2">Published at: {{post.created_at}}</span>
                                             </div>
                                             
+                                            <div class="ml-auto user-like">
+                                                
+
+                                                <button onclick="document.getElementById('id01').style.display='block'" class="btn btn-icon rounded-circle btn-xs" style=""><i class="fa fa-edit"></i></button>
+
+                                                <div id="id01" class="modal">
+                                                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                                                    <form>
+                                                        
+                                                    </form>
+                                                </div>
+
+                                                
+                                            </div>
+                                         
                                         </div>
                                         <p>{{post.description}}</p> 
                                         <div >
                                             <div v-if="post.Images.length==1">
-                                            <div style="height:300px;width:100%; border-style:solid;">
-                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:300px;width:540px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
+                                                <div style="">
+                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                         
                                                 </div>
                                         </div>
                                     
                                         <div v-if="post.Images.length==2">
-                                           <div style="height:300px; width:400px; border-style:solid">
+                                           <div style="height:300px; width:400px;">
                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:290px;width:190px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:290px;width:200px;" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                             </div>
                                         </div>
                                          <div v-if="post.Images.length==3">
-                                           <div style="height:300px; width:400px; border-style:solid">
+                                           <div style="height:300px; width:400px;">
                                                <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:190px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:190px;" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                 <img class="img-fluid card-img-top rounded-sm mb-2" style="height:140px;width:400px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
                                             </div>
                                         </div>
                                         <div v-if="post.Images.length==4">
-                                              <div style="height:300px; width:300px; border-style:solid">
+                                              <div style="height:300px; width:300px;">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
@@ -112,7 +129,7 @@
                                                </div>
                                         </div>
                                         <div v-if="post.Images.length==5">
-                                              <div style="height:300px; width:300px; border-style:solid">
+                                              <div style="height:300px; width:300px;">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[0].uploadfile" alt="avtar img holder">
                                                   <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;float:left" :src="post.Images[1].uploadfile" alt="avtar img holder">
                                                    <img class="img-fluid card-img-top rounded-sm mb-2" style="height:150px;width:150px;" :src="post.Images[2].uploadfile" alt="avtar img holder">
@@ -130,8 +147,7 @@
                                       </div>
                                    </div>
                                   
-                                 <div  style="height:40px; width:400px;">
-                                 </div>
+                                 
                                        
                                         </div>
 
@@ -141,13 +157,13 @@
                                       
                                         <div class="d-flex justify-content-start align-items-center mb-1">
                                             <div class="d-flex align-items-center">
-                                                <i  id="likeButton" @click="clickLike(post.id)" class="feather icon-heart font-medium-2 mr-50" ></i>
+                                                <i  id="likeButton" @click="clickLike(post.id)" onclick="myFunction(this)" class="fa fa-thumbs-up font-medium-2 mr-50 cursor-pointer fa-3x" ></i>
                                                 <span>{{post.likecount}}</span>
                                             </div>
                                             <div class="ml-2">
                                                 <ul class="list-unstyled users-list m-0  d-flex align-items-center">
                                                     <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" data-original-title="Trina Lynes" class="avatar pull-up">
-                                                       <!-- <img class="media-object rounded-circle" :src="img.profileimg" alt="Avatar" height="30" width="30">-->
+                                                       
                                                     </li>
                                                     
                                                     <li class="d-inline-block pl-50">
@@ -159,39 +175,58 @@
                                                 <i class="feather icon-message-square font-medium-2 mr-50"></i>
                                             </p>
                                         </div>
-                                        <div class="d-flex justify-content-start align-items-center mb-1" v-for="comment in comments.data" :key="comment">
-                                            <div v-if="post.id == comment.post_id">
-                                                <div class="avatar mr-50">
-                                                    <img src="../app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="30" width="30">
-                                                </div>
-                                                <div class="user-page-info" >
-                                                    
-                                                        <h6 class="mb-0">{{comment.id}}</h6>
-                                                        <span class="font-small-2">{{comment.comment}}</span>
-                                                            
-                                                            <div v-for="reply in replies.data" :key="reply" style="margin-left:10px;">
-                                                                <div v-if="post.id == reply.post_id">
-                                                                    <div v-if="reply.comment_id == comment.id">
-                                                                        <span class="font-small-2">{{reply.reply}}</span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                        <div v-for="comment in comments.data" :key="comment">
+                                            <div class="d-flex justify-content-start align-items-center mb-1"  v-if="post.id == comment.post_id">
+                                                
+                                                    <div class="avatar mr-50" style="margin-block-end: auto;">
+                                                        <span v-for="img in profileImages.data" :key="img">
+                                                        <img v-if="comment.user_id==img.user_id" :src="img.profileimg" alt="Avatar" style="height:30px;width:30px;object-fit:cover;">
+                                                        </span>
                                                     </div>
                                                 
-                                                <div class="ml-auto cursor-pointer">
-                                                    <div>
-                                                        <i class="feather icon-heart mr-50" @click="clickOnReply(post.id)"></i><span></span>
-                                                        <i :id="comment.id" class="feather icon-message-square" v-on:click="seen =! seen">
-                                                            <textarea v-if="seen" class="form-control" id="label-textarea"  rows="2" placeholder="Reply" v-model="reply"></textarea>
-                                                            <button v-if="seen" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
-                                                        </i>
+                                                    <div class="user-page-info" >
+                                                    
+                                                        <span v-for="user in users.data" :key="user">
+                                                            <h6 class="mb-0" v-if="comment.user_id==user.id">{{user.first_name}} {{user.last_name}}</h6>
+                                                        </span>
+                                                        <span class="font-small-2">{{comment.comment}}</span>
+                                                        <i class="fa fa-thumbs-up" aria-hidden="true" style="margin-left:10px;padding:0px 10px;cursor: pointer;"  @click="likeComment(comment.id,post.id)"></i>
+                                                        <span>{{comment.commentlikecount}}</span>
+                                                        
+                                                          <span>
+                                                            
+                                                                <div v-for="reply in replies.data" :key="reply" style="background-color:#F6F2F1;margin:10px;border-radius:10px">
+                                                                    <div v-if="post.id == reply.post_id">
+                                                                        <div v-if="reply.comment_id == comment.id">
+                                                                            <div class="avatar mr-50" style="float: left;">
+                                                                                    <span v-for="img in profileImages.data" :key="img">
+                                                                                        <img v-if="reply.user_id==img.user_id" :src="img.profileimg" alt="Avatar" style="height:25px;width:25px;object-fit:cover;">
+                                                                                    </span>
+                                                                            </div>
+                                                                            <div class="user-page-info" style="margin-left:10px;padding: 5px 5px;" >
+                                                                                <span v-for="user in users.data" :key="user">
+                                                                                    <h6 class="mb-0" v-if="reply.user_id==user.id">{{user.first_name}} {{user.last_name}}</h6>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span class="font-small-2">{{reply.reply}}</span>   
+                                                                            <i class="fa fa-thumbs-up" aria-hidden="true" style="margin-left:10px;padding:0px 10px;cursor: pointer;"  @click="clickOnReply(reply.id, comment.id)"></i>
+                                                                            <span>{{reply.replylikecount}}</span>
+                                                                        </div>
+                                                                         </div>
+                                                                    
+                                                                </div>                                                                
+                                                            </span>
+                                                              <textarea style="margin-left:20px;    display: inline-block;" class="form-control" id="label-textarea"  rows="1" placeholder="Reply" v-model="reply"></textarea>
+                                                            <button style="margin-left:20px;" type="button" class="btn btn-sm btn-primary" @click="sendReply(comment.id, post.id)">Reply</button>
+                                                        
+                                                            
                                                     </div>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                        
                                         <fieldset class="form-label-group mb-50">
-                                            <textarea class="form-control" id="label-textarea" rows="3"  placeholder="Add Comment" v-model="comment"></textarea>
+                                            <textarea class="form-control" id="label-textarea" rows="2"  placeholder="Add Comment" v-model="comment"></textarea>
                                             <label for="label-textarea">Add Comment</label>
                                         </fieldset>
                                         <button type="button" class="btn btn-sm btn-primary" @click="postComment(post.id)">Post Comment</button>
@@ -199,8 +234,7 @@
                                 </div>
                                 
                                 
-                            </div>
-                            
+                            </div>                            
                         </div>
                         <div class="row">
                             <div class="col-12 text-center">
@@ -217,6 +251,8 @@
 </template>
 
 <script>
+
+/* eslint-disable no-useless-escape */
 import DataService from "../services/DataService"
 import CoverPhoto from "../components/CoverPhoto"
 export default {
@@ -228,17 +264,19 @@ export default {
   data() {
       
        return {
+           pic: [],
            seen: false,
+           modalOpen: false,
            replies: [],
            comments: [],
            posts: [],
-           user:[],
-           img:[],
+           users:[],
+           profileImages:[],
            companies: [],
            comment: '',
            reply: '',
            like: '',
-           
+           user:'',
            company:'',
            post: {
                 name: '',
@@ -249,14 +287,25 @@ export default {
            submitted: false,
                 message:''
       };
-  },created() {
-      
-     
-      DataService.getUser()
+  },
+  created() {
+      DataService.getAllProfileImages()
       .then(response=>{
-          this.user = response.data.user;
-          console.log(response.data.user);
-          console.log(this.user.dob);
+          this.profileImages = response.data;
+          
+      })
+      DataService.getAllCompany()
+      .then(response=>{
+          this.companies = response.data;
+          
+      })
+      .catch(e => {
+          console.log(e);
+        });
+      DataService.getUsers()
+      .then(response=>{
+          this.users = response.data;
+          
       })
       .catch(e => {
           console.log(e);
@@ -264,7 +313,9 @@ export default {
        DataService.getAll()
         .then(response => {
           this.posts = response.data;
-          console.log(response.data);
+          
+
+          
         })
         .catch(e => {
           console.log(e);
@@ -272,9 +323,6 @@ export default {
         DataService.getAllComments()
                         .then(response => {
                         this.comments = response.data;
-                        console.log(response.data);
-                        console.log(this.comment);
-                        console.log("get comments");
                         
                         })
                         .catch(e => {
@@ -283,18 +331,58 @@ export default {
         DataService.getAllReply()
             .then(response=>{
                 this.replies = response.data;
-                console.log(response.data);
-                console.log(this.replies);
             })
             .catch(e => {
                 console.log(e);
             })
+            console.log("pic");
+            for(var i=0;i<this.user.data.length;i++)
+            {
+                var count=0;
+                for(var j=0;this.profileimg.data.length;j++)
+                {
+                   if(this.user.data.id[i]==this.profileimg.data.user_id[j])
+                   {
+                        count=1;
+                   }
+                    
+                }
+                if(count=0)
+                {
+                    this.pic=this.user.data.id[i];
+                }
+                    
+            }
+            console.log("pic");
+            console.log(this.pic);
     },
-            
+     
+
+           
   methods: {
-      clickOnReply(id){
+      openModal() {
+            this.modalOpen = !this.modalOpen;
+        },
+     likeComment(comment_id,post_id){
+         var lc=new FormData();
+         lc.append("post_id", post_id);
+         lc.append("comment_id", comment_id);
+
+         console.log(lc);
+         DataService.commentLike(lc)
+         .then(response=>{
+         this.message="Comment Successfuly Like"
+         alert("Comment likes");
+         })
+          .catch(e=>{
+              console.log(e);
+              this.message="Invalid"
+          });
+     },
+      clickOnReply(reply_id, comment_id){
           var cor = new FormData();
-          cor.append("comment_id",id);
+          cor.append("reply_id", reply_id);
+          cor.append("comment_id",comment_id);
 
           console.log(cor);
           DataService.createReplyLike(cor)
@@ -373,7 +461,31 @@ export default {
 
       },
 
-  } 
       
+      sendPost(event){
+                event.preventDefault();
+                var formData = new FormData();
+                formData.append("description" ,this.post.description);
+                formData.append("uploadfile[0]", document.getElementById("post_image").files[0]);
+                formData.append("uploadvideo[0]", document.getElementById("post_video").files[0]);
+
+                console.log(formData);
+                
+                DataService.create(formData)
+                    .then(response=>{
+                        this.post.id=response.data.id;
+                        console.log(response.data);
+                        this.message="Successfully saved !"
+                        alert("Detail Added");
+                        location.replace("/timeline");
+                    
+                    })
+                    .catch(e=>{
+                        console.log(e);
+                        this.message="Invalid Credentials "
+                    });
+                    this.submitted=true;
+                    },         
+                },
 }
 </script>
