@@ -437,8 +437,8 @@ export default {
                 message:''
       };
   },
-  async created() {
-      await DataService.getProfile()
+   async created() {
+       DataService.getProfile()
         .then(response => {
           this.prof = response.data.data;
           
@@ -447,7 +447,7 @@ export default {
           console.log(e);
         });
 
-      await DataService.getAllProfileImages()
+       await DataService.getAllProfileImages()
       .then(response=>{
           this.profileImages = response.data;
           
@@ -459,7 +459,7 @@ export default {
       .catch(e => {
           console.log(e);
         });
-      await DataService.getUsers()
+       await DataService.getUsers()
       .then(response=>{
           this.users = response.data;
           
@@ -467,7 +467,7 @@ export default {
       .catch(e => {
           console.log(e);
         });
-       await DataService.getAll()
+        await DataService.getAll()
         .then(response => {
           this.posts = response.data;
           
@@ -494,7 +494,7 @@ export default {
             })
             
             
-            console.log("checking..");
+            
             for(var i=0;i<this.users.data.length;i++)
             {
                 this.count=0;
@@ -517,7 +517,7 @@ export default {
                 } 
                        
             }
-            console.log(this.pic);
+            
             
     },
      

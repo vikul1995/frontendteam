@@ -6,6 +6,13 @@ Vue.use(vmodal)
 
 import VuePageTitle from 'vue-page-title'
  
+
+import 'vuelayers/lib/style.css' // needs css-loader
+
+
+import tinymce from 'vue-tinymce-editor'
+Vue.component('tinymce', tinymce)
+
 Vue.use(VuePageTitle, {
   // prefix: 'My App - ',
   prefix: 'EnPNeeds -  '
@@ -38,6 +45,10 @@ import './app-assets/css/pages/card-analytics.css'
 import './app-assets/css/plugins/tour/tour.css'
 import '@/app-assets/css/pages/app-ecommerce-shop.css';
 
+import Buefy from 'buefy'
+
+Vue.use(Buefy)
+import * as VueGoogleMaps from "vue2-google-maps"; 
 
 import { Map, TileLayer, OsmSource, Geoloc, PointGeom, StyleBox, Feature, IconStyle, TextStyle  } from 'vuelayers'
 Vue.use(Map)
@@ -49,6 +60,13 @@ Vue.use(PointGeom)
 Vue.use(TileLayer)
 Vue.use(OsmSource)
 Vue.use(Geoloc)
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyBlDga5jyuOXYFgKwW7sncOcNLlQiu_LT0",
+    libraries: "places" 
+  }
+});
+
 
 import mainLayout from "./layouts/mainLayout.vue";
 import landingLayout from "./layouts/landingLayout.vue";

@@ -12,6 +12,7 @@
     "@vertx/core": "^3.9.1",
     "@vertx/web": "^3.9.1",
     "axios": "^0.19.2",
+    "buefy": "^0.8.20",
     "core-js": "^3.6.5",
     "es6-promise": "^4.2.8",
     "eslint-plugin-disable": "^2.0.1",
@@ -26,7 +27,9 @@
     "vue-page-title": "^1.2.2",
     "vue-plotly": "^1.1.0",
     "vue-router": "^3.3.4",
+    "vue-tinymce-editor": "^1.6.2",
     "vue-vertx3-eventbus-client": "^3.5.0",
+    "vue2-google-maps": "^0.10.7",
     "vuelayers": "^0.11.27",
     "webpack-vertx-plugin": "0.0.6"
   },

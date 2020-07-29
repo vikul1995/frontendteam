@@ -94,24 +94,28 @@
                                 <li class="dropdown-menu-footer"><a class="dropdown-item p-1 text-center" href="javascript:void(0)">Read all notifications</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
+                        <li class="dropdown dropdown-user nav-item">
+                            <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-sm-flex d-none">
                                     <span class="user-name text-bold-600">{{user.first_name}} {{user.last_name}}</span>
                                     <span class="user-status">Available</span>
                                 </div>
-                                <div>
-                                    <span><a href="/profileTimeline">
+                                
+                                    <img class="round" :src="image.profileimg" alt="avatar" style="width:40px;height:40px;object-fit:cover">
+                                    <!--<div v-for="img in pic" :key="img"> 
+                                                    <span v-if="img==user.id">
+                                                        <img class="round" src="../app-assets/dp.png" alt="avatar" style="width:40px;height:40px;object-fit:cover"></a>
+                                                    </span>
+                                                    
+                                    </div>-->
                                     
-                                    <img class="round" :src="image.profileimg" alt="avatar" style="width:40px;height:40px;object-fit:cover"></a>
-                                    
-                                    </span>
-                                </div>
+                                
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
 								<a class="dropdown-item" href="/profile"><i class="feather icon-user"></i> Edit Profile</a>
 								<a class="dropdown-item" href="app-email.html"><i class="feather icon-mail"></i> My Inbox</a>
 								<a class="dropdown-item" href="app-todo.html"><i class="feather icon-check-square"></i> Task</a>
-								<a class="dropdown-item" href="/postad"><i class="feather icon-message-square"></i> Post Ads</a>
+								<a class="dropdown-item" href="/postsad"><i class="feather icon-message-square"></i> Post Ads</a>
                                 <div class="dropdown-divider"></div><a class="dropdown-item" href="/"><i class="feather icon-power"></i> Logout</a>
                             </div>
                         </li>
@@ -126,22 +130,25 @@ import DataService from "../services/DataService"
 export default {
     data(){
         return {
+            count: '',
+            pic:[],
            image:[],
            user:[],
         }
     },
-    created() {
-         DataService.getUser()
+    async created() {
+        await DataService.getUser()
       .then(response=>{
           this.user = response.data.user;
       })
-      DataService.getpic()
+      await DataService.getpic()
       .then(response=>{
           this.image = response.data.data;
       })
       .catch(e => {
           console.log(e);
         });
+    
     }   
 }
 </script>
